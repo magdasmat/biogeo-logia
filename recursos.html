@@ -93,6 +93,68 @@
     color: #FFF;
   }
 
+  /* ── MENÚ HAMBURGUESA ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    z-index: 200;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #FFF;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-mobile {
+    display: none;
+    position: fixed;
+    top: 67px;
+    left: 0; right: 0;
+    background: var(--geo);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 1rem;
+    z-index: 99;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .nav-mobile.open { display: flex; }
+
+  .nav-mobile a {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-mobile a:hover, .nav-mobile a.active {
+    background: rgba(255,255,255,0.12);
+    color: #FFF;
+  }
+
+  @media (max-width: 640px) {
+    .hamburger { display: flex; }
+    nav { display: none; }
+    .logo-sub { display: none; }
+  }
   /* ── PAGE HEADER ── */
   .page-header {
     background: linear-gradient(135deg, var(--geo) 0%, #2E1B18 60%, #1B2E1B 100%);
@@ -425,12 +487,24 @@
     <span class="logo-sub">Repositorio REA · Secundaria</span>
   </a>
   <nav>
-    <a href="index.html">Inicio</a>
-    <a href="recursos.html" class="active">Recursos</a>
+    <a href="index.html" class="active">Inicio</a>
+    <a href="recursos.html">Recursos</a>
     <a href="niveles.html">Por nivel</a>
     <a href="sobre.html">Sobre el proyecto</a>
   </nav>
+  <button class="hamburger" onclick="toggleMenu(this)" aria-label="Abrir menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </header>
+
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html" class="active">Inicio</a>
+  <a href="recursos.html">Recursos</a>
+  <a href="niveles.html">Por nivel</a>
+  <a href="sobre.html">Sobre el proyecto</a>
+</div>
 
 <!-- ── CABECERA DE PÁGINA ── -->
 <div class="page-header">
@@ -2037,6 +2111,11 @@
       });
     });
   });
+
+  function toggleMenu(btn) {
+    btn.classList.toggle('open');
+    document.getElementById('nav-mobile').classList.toggle('open');
+  }
 </script>
 
 </body>
