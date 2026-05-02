@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobre el proyecto — BioGeo logIA</title>
+<meta name="description" content="Información sobre el proyecto BioGeo logIA, repositorio de REA para Biología y Geología en Educación Secundaria. TFM — URJC 2025-2026.">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bio: #1B5E20;
+    --bio-light: #E8F5E9;
+    --bio-mid: #4CAF50;
+    --geo: #4E342E;
+    --geo-light: #EFEBE9;
+    --geo-mid: #8D6E63;
+    --accent: #FF8F00;
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --text: #1C1C1A;
+    --text-muted: #6B6B67;
+    --border: rgba(0,0,0,0.08);
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--geo);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFF;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--accent); font-style: italic; }
+
+  .logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+    align-self: center;
+  }
+
+  nav { display: flex; gap: 0.25rem; }
+
+  nav a {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  nav a:hover, nav a.active {
+    background: rgba(255,255,255,0.12);
+    color: #FFF;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: linear-gradient(135deg, var(--geo) 0%, #2E1B18 60%, #1B2E1B 100%);
+    padding: 3.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 85%, rgba(76,175,80,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 85% 15%, rgba(255,143,0,0.08) 0%, transparent 50%);
+  }
+
+  .page-header-content { position: relative; z-index: 1; }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #FFF;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-header p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3.5rem 2rem;
+  }
+
+  /* ── CUESTIONARIO CTA ── */
+  .cta-box {
+    background: var(--geo);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    text-align: center;
+    margin-bottom: 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,143,0,0.08);
+  }
+
+  .cta-badge {
+    display: inline-block;
+    background: rgba(255,143,0,0.2);
+    border: 1px solid rgba(255,143,0,0.35);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.8rem;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+
+  .cta-box h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #FFF;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-box p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+    line-height: 1.65;
+    max-width: 480px;
+    margin: 0 auto 1.75rem;
+  }
+
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #FFF;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+    letter-spacing: 0.02em;
+    font-family: 'DM Sans', sans-serif;
+    border: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .btn-cta.activo {
+    cursor: pointer;
+    opacity: 1;
+  }
+
+  .btn-cta.activo:hover { background: #E65100; }
+
+  .cta-aviso {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  /* ── SECCIONES DE CONTENIDO ── */
+  .content-section {
+    margin-bottom: 3rem;
+  }
+
+  .content-section h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--bio-light);
+  }
+
+  .content-section h2 span {
+    color: var(--bio);
+  }
+
+  .content-section p {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--text);
+    font-weight: 300;
+    margin-top: 1rem;
+  }
+
+  /* ── OBJETIVOS ── */
+  .objetivos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .objetivo-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    border-left: 3px solid var(--bio-mid);
+  }
+
+  .objetivo-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+
+  .objetivo-card p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-top: 0;
+  }
+
+  /* ── EQUIPO ── */
+  .equipo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .persona-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .avatar.investigadora { background: var(--bio-light); color: var(--bio); }
+  .avatar.tutor         { background: var(--geo-light); color: var(--geo); }
+
+  .persona-info h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+  }
+
+  .persona-rol {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .persona-info p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-top: 0;
+    font-weight: 300;
+  }
+
+  .persona-email {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--bio);
+    text-decoration: none;
+    font-weight: 400;
+  }
+
+  .persona-email:hover { text-decoration: underline; }
+
+  /* ── LICENCIA / ÉTICA ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.4rem;
+  }
+
+  .info-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .info-card h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+
+  .info-card p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-top: 0;
+    font-weight: 300;
+  }
+
+  .info-card a {
+    color: var(--bio);
+    text-decoration: none;
+    font-weight: 400;
+  }
+
+  .info-card a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--geo);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.78rem;
+    font-weight: 300;
+    margin-top: 4rem;
+    letter-spacing: 0.03em;
+    line-height: 1.8;
+  }
+
+  footer strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- ── CABECERA ── -->
+<header>
+  <a href="index.html" class="logo">
+    BioGeo<span>log</span>IA
+    <span class="logo-sub">Repositorio REA · Secundaria</span>
+  </a>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="recursos.html">Recursos</a>
+    <a href="niveles.html">Por nivel</a>
+    <a href="sobre.html" class="active">Sobre el proyecto</a>
+  </nav>
+</header>
+
+<!-- ── CABECERA DE PÁGINA ── -->
+<div class="page-header">
+  <div class="page-header-content">
+    <h1>Sobre el proyecto</h1>
+    <p>Conoce el origen, los objetivos y el equipo detrás de BioGeo logIA</p>
+  </div>
+</div>
+
+<main>
+
+  <!-- ── CTA CUESTIONARIO ── -->
+  <div class="cta-box">
+    <div class="cta-badge">✦ Participación docente</div>
+    <h2>¿Eres docente o futuro docente?</h2>
+    <p>Tu opinión es fundamental para mejorar este repositorio. Comparte tu experiencia con los REA y valora los recursos disponibles en un cuestionario anónimo de 5-10 minutos.</p>
+    <!-- Cuando tengas el enlace de Forms, sustituye el href="#" por tu enlace
+         y añade la clase "activo" al botón y elimina el párrafo de aviso -->
+    <a href="#" class="btn-cta" aria-disabled="true">
+      Acceder al cuestionario →
+    </a>
+    <p class="cta-aviso">El cuestionario estará disponible próximamente, pendiente de aprobación ética (CEI — URJC).</p>
+  </div>
+
+  <!-- ── QUÉ ES ── -->
+  <div class="content-section">
+    <h2>¿Qué es <span>BioGeo logIA</span>?</h2>
+    <p>BioGeo logIA es un repositorio digital de Recursos Educativos en Abierto (REA) orientado a la enseñanza de Biología y Geología en Educación Secundaria (ESO y Bachillerato). Su objetivo es ofrecer al profesorado un punto de acceso centralizado, organizado y de libre uso a materiales didácticos de calidad, adaptados al currículo español vigente derivado de la LOMLOE.</p>
+    <p>Todos los recursos incluidos en este repositorio están disponibles bajo licencias abiertas (Creative Commons u equivalentes), lo que permite su acceso, reutilización, adaptación y redistribución sin coste alguno, en consonancia con la Recomendación sobre los Recursos Educativos Abiertos de la UNESCO (2019).</p>
+    <p>El repositorio está alojado en GitHub Pages y ha sido desarrollado como Trabajo Fin de Máster del Máster Universitario en Formación del Profesorado de Educación Secundaria Obligatoria y Bachillerato, Formación Profesional y Enseñanza de Idiomas (especialidad Biología y Geología) de la Universidad Rey Juan Carlos, curso 2025-2026.</p>
+  </div>
+
+  <!-- ── OBJETIVOS ── -->
+  <div class="content-section">
+    <h2>Objetivos del <span>proyecto</span></h2>
+    <div class="objetivos">
+      <div class="objetivo-card">
+        <h4>Crear el repositorio</h4>
+        <p>Diseñar y organizar un repositorio digital de REA para Biología y Geología en Secundaria, accesible y de uso libre.</p>
+      </div>
+      <div class="objetivo-card">
+        <h4>Catalogar recursos</h4>
+        <p>Clasificar y etiquetar los recursos según criterios pedagógicos y tecnológicos, incluyendo nivel, tipo de recurso y bloque temático.</p>
+      </div>
+      <div class="objetivo-card">
+        <h4>Analizar necesidades docentes</h4>
+        <p>Recoger la opinión del profesorado sobre el uso de REA mediante un cuestionario de valoración anónimo.</p>
+      </div>
+      <div class="objetivo-card">
+        <h4>Evaluar la utilidad</h4>
+        <p>Evaluar la utilidad percibida del repositorio por parte de docentes en activo y docentes en formación.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EQUIPO ── -->
+  <div class="content-section">
+    <h2>Equipo <span>investigador</span></h2>
+    <div class="equipo">
+      <div class="persona-card">
+        <div class="avatar investigadora">MM</div>
+        <div class="persona-info">
+          <h4>Magdalena Matito Silvero</h4>
+          <div class="persona-rol">Investigadora principal</div>
+          <p>Graduada en Biotecnología y Máster en Análisis de Datos Ómicos. Estudiante del Máster de Formación del Profesorado — URJC.</p>
+          <a href="mailto:m.matito.2025@alumnos.urjc.es" class="persona-email">m.matito.2025@alumnos.urjc.es</a>
+        </div>
+      </div>
+      <div class="persona-card">
+        <div class="avatar tutor">PM</div>
+        <div class="persona-info">
+          <h4>Pablo Melón Jiménez</h4>
+          <div class="persona-rol">Tutor académico</div>
+          <p>Doctor en Humanidades (Ciencias de la Educación), Licenciado en Ciencias Geológicas y Máster en Formación del Profesorado — URJC.</p>
+          <a href="mailto:pablo.melon@urjc.es" class="persona-email">pablo.melon@urjc.es</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ÉTICA Y LICENCIAS ── -->
+  <div class="content-section">
+    <h2>Ética, privacidad y <span>licencias</span></h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="info-card-icon">🔒</span>
+        <h4>Privacidad y anonimato</h4>
+        <p>El cuestionario de valoración es completamente anónimo. No se recoge ningún dato personal identificable. Los datos se almacenan en Microsoft Forms (URJC) y se usarán exclusivamente con fines académicos.</p>
+      </div>
+      <div class="info-card">
+        <span class="info-card-icon">⚖️</span>
+        <h4>Aprobación ética</h4>
+        <p>Este proyecto ha sido sometido a evaluación por el Comité de Ética de la Investigación (CEI) de la Universidad Rey Juan Carlos, conforme a la normativa vigente.</p>
+      </div>
+      <div class="info-card">
+        <span class="info-card-icon">📄</span>
+        <h4>Licencia del repositorio</h4>
+        <p>El código de esta web está disponible bajo licencia <a href="https://opensource.org/licenses/MIT" target="_blank">MIT</a>. Cada recurso educativo catalogado mantiene su licencia original, indicada en su ficha.</p>
+      </div>
+      <div class="info-card">
+        <span class="info-card-icon">🌐</span>
+        <h4>Recursos Educativos Abiertos</h4>
+        <p>Todos los recursos incluidos están publicados bajo licencias <a href="https://creativecommons.org/licenses/" target="_blank">Creative Commons</a> u equivalentes, en línea con la Recomendación REA de la <a href="https://www.unesco.org/es/open-educational-resources" target="_blank">UNESCO (2019)</a>.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── PIE DE PÁGINA ── -->
+<footer>
+  <p><strong>BioGeo logIA</strong> · Repositorio de Recursos Educativos en Abierto para Biología y Geología en Educación Secundaria</p>
+  <p>Trabajo Fin de Máster · <strong>Magdalena Matito Silvero</strong> · Máster de Formación del Profesorado · Universidad Rey Juan Carlos · 2025–2026</p>
+  <p>Tutor académico: <strong>Pablo Melón Jiménez</strong> · URJC</p>
+  <p>Todos los recursos bajo licencia <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons</a> · Sitio alojado en <a href="https://pages.github.com" target="_blank">GitHub Pages</a></p>
+</footer>
+
+</body>
+</html>

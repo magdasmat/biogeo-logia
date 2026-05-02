@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BioGeo logIA — Repositorio REA Biología y Geología</title>
+<meta name="description" content="Repositorio de Recursos Educativos en Abierto para la enseñanza de Biología y Geología en Educación Secundaria. Trabajo Fin de Máster — URJC 2025-2026.">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bio: #1B5E20;
+    --bio-light: #E8F5E9;
+    --bio-mid: #4CAF50;
+    --geo: #4E342E;
+    --geo-light: #EFEBE9;
+    --geo-mid: #8D6E63;
+    --accent: #FF8F00;
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --text: #1C1C1A;
+    --text-muted: #6B6B67;
+    --border: rgba(0,0,0,0.08);
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--geo);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFF;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--accent); font-style: italic; }
+
+  .logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+    align-self: center;
+  }
+
+  nav { display: flex; gap: 0.25rem; }
+
+  nav a {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  nav a:hover, nav a.active {
+    background: rgba(255,255,255,0.12);
+    color: #FFF;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--geo) 0%, #2E1B18 50%, #1B2E1B 100%);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 80%, rgba(76,175,80,0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255,143,0,0.10) 0%, transparent 50%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,143,0,0.15);
+    border: 1px solid rgba(255,143,0,0.3);
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.9rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    font-weight: 700;
+    color: #FFF;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 em { color: var(--accent); font-style: italic; }
+
+  .hero p {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto 2rem;
+    font-weight: 300;
+  }
+
+  .hero-search {
+    display: flex;
+    max-width: 480px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .hero-search input {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 0.85rem 1.2rem;
+    color: #FFF;
+    font-size: 0.9rem;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+  }
+
+  .hero-search input::placeholder { color: rgba(255,255,255,0.35); }
+
+  .hero-search button {
+    background: var(--accent);
+    border: none;
+    padding: 0 1.5rem;
+    color: #FFF;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .hero-search button:hover { background: #E65100; }
+
+  /* ── STATS ── */
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    padding: 2rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .stat { text-align: center; }
+
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--bio);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── MAIN ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+
+  .section-sub {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  /* ── CATEGORY CARDS ── */
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .cat-card.bio::before  { background: var(--bio-mid); }
+  .cat-card.geo::before  { background: var(--geo-mid); }
+  .cat-card.eco::before  { background: #0097A7; }
+  .cat-card.evo::before  { background: #7B1FA2; }
+
+  .cat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border-color: rgba(0,0,0,0.12);
+  }
+
+  .cat-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .cat-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.01em;
+  }
+
+  .cat-card p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .cat-count {
+    margin-top: 1rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* ── FILTERS ── */
+  .filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--geo);
+    color: #FFF;
+    border-color: var(--geo);
+  }
+
+  /* ── RESOURCE GRID ── */
+  .resources {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .resource-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+
+  .resource-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+  }
+
+  .resource-thumb {
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    position: relative;
+  }
+
+  .resource-thumb.video       { background: linear-gradient(135deg, #1B5E20, #2E7D32); }
+  .resource-thumb.sim         { background: linear-gradient(135deg, #0D47A1, #1565C0); }
+  .resource-thumb.doc         { background: linear-gradient(135deg, #4E342E, #6D4C41); }
+  .resource-thumb.interactive { background: linear-gradient(135deg, #4A148C, #6A1B9A); }
+
+  .resource-type-badge {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #FFF;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .resource-body { padding: 1rem 1.1rem 1.1rem; }
+
+  .resource-meta {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+  }
+
+  .tag.nivel   { background: var(--bio-light); color: var(--bio); }
+  .tag.materia { background: var(--geo-light); color: var(--geo); }
+
+  .resource-body h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .resource-body p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  .resource-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.9rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .license {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .btn-access {
+    background: var(--geo);
+    color: #FFF;
+    border: none;
+    border-radius: 6px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    display: inline-block;
+  }
+
+  .btn-access:hover { background: #2E1B18; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--geo);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.78rem;
+    font-weight: 300;
+    margin-top: 4rem;
+    letter-spacing: 0.03em;
+    line-height: 1.8;
+  }
+
+  footer strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- ══ CABECERA ══ -->
+<header>
+  <a href="index.html" class="logo">
+    BioGeo<span>log</span>IA
+    <span class="logo-sub">Repositorio REA · Secundaria</span>
+  </a>
+  <nav>
+    <a href="index.html" class="active">Inicio</a>
+    <a href="recursos.html">Recursos</a>
+    <a href="niveles.html">Por nivel</a>
+    <a href="sobre.html">Sobre el proyecto</a>
+  </nav>
+</header>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">✦ Recursos Educativos en Abierto</div>
+    <h1>Biología y Geología<br>para <em>Secundaria</em></h1>
+    <p>Repositorio de recursos educativos abiertos seleccionados, catalogados y organizados para el profesorado de Biología y Geología en ESO y Bachillerato.</p>
+    <div class="hero-search">
+      <input type="text" id="buscador" placeholder="Buscar por tema, nivel o tipo de recurso..." aria-label="Buscar recursos">
+      <button onclick="buscar()">Buscar</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ESTADÍSTICAS ══ -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">57</div>
+    <div class="stat-label">Recursos</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">10</div>
+    <div class="stat-label">Bloques temáticos</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Cursos ESO</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Acceso libre</div>
+  </div>
+</div>
+
+<!-- ══ CONTENIDO PRINCIPAL ══ -->
+<main>
+
+  <!-- Bloques temáticos -->
+  <h2 class="section-title">Explorar por bloque temático</h2>
+  <p class="section-sub">Selecciona un área para ver todos los recursos disponibles</p>
+
+  <div class="categories">
+    <a href="recursos.html" class="cat-card bio">
+      <span class="cat-icon">🔭</span>
+      <h3>Proyecto científico</h3>
+      <p>Método científico, experimentación y herramientas digitales.</p>
+      <div class="cat-count">4 recursos · 1.º, 3.º, 4.º ESO</div>
+    </a>
+    <a href="recursos.html" class="cat-card geo">
+      <span class="cat-icon">🪨</span>
+      <h3>Geología</h3>
+      <p>Rocas, minerales, tectónica de placas y riesgos naturales.</p>
+      <div class="cat-count">5 recursos · 1.º, 3.º, 4.º ESO</div>
+    </a>
+    <a href="recursos.html" class="cat-card bio">
+      <span class="cat-icon">🧬</span>
+      <h3>La célula</h3>
+      <p>Teoría celular, microscopio, mitosis y meiosis.</p>
+      <div class="cat-count">7 recursos · 1.º y 4.º ESO</div>
+    </a>
+    <a href="recursos.html" class="cat-card eco">
+      <span class="cat-icon">🌿</span>
+      <h3>Seres vivos</h3>
+      <p>Los seis reinos, taxonomía e identificación de especies.</p>
+      <div class="cat-count">8 recursos · 1.º ESO</div>
+    </a>
+    <a href="recursos.html" class="cat-card eco">
+      <span class="cat-icon">🌍</span>
+      <h3>Ecología y sostenibilidad</h3>
+      <p>Ecosistemas, biodiversidad y cambio climático.</p>
+      <div class="cat-count">3 recursos · 1.º ESO</div>
+    </a>
+    <a href="recursos.html" class="cat-card bio">
+      <span class="cat-icon">🥗</span>
+      <h3>Hábitos saludables</h3>
+      <p>Nutrición, estilo de vida, drogas y salud sexual.</p>
+      <div class="cat-count">5 recursos · 1.º y 3.º ESO</div>
+    </a>
+    <a href="recursos.html" class="cat-card evo">
+      <span class="cat-icon">🫀</span>
+      <h3>Cuerpo humano</h3>
+      <p>Aparatos y sistemas, anatomía y fisiología humana.</p>
+      <div class="cat-count">7 recursos · 3.º ESO</div>
+    </a>
+    <a href="recursos.html" class="cat-card geo">
+      <span class="cat-icon">💉</span>
+      <h3>Salud y enfermedad</h3>
+      <p>Sistema inmunitario, vacunas, antibióticos y trasplantes.</p>
+      <div class="cat-count">6 recursos · 3.º ESO</div>
+    </a>
+    <a href="recursos.html" class="cat-card evo">
+      <span class="cat-icon">🧪</span>
+      <h3>Genética y evolución</h3>
+      <p>ADN, herencia mendeliana y teorías evolutivas.</p>
+      <div class="cat-count">6 recursos · 4.º ESO</div>
+    </a>
+    <a href="recursos.html" class="cat-card evo">
+      <span class="cat-icon">🌌</span>
+      <h3>La Tierra en el universo</h3>
+      <p>Origen del universo, origen de la vida y astrobiología.</p>
+      <div class="cat-count">6 recursos · 4.º ESO</div>
+    </a>
+  </div>
+
+  <!-- Recursos destacados -->
+  <h2 class="section-title">Recursos destacados</h2>
+  <p class="section-sub">Selección de materiales de alta calidad para el aula</p>
+
+  <div class="filters">
+    <button class="filter-btn active" data-filter="todos">Todos</button>
+    <button class="filter-btn" data-filter="video">Vídeos</button>
+    <button class="filter-btn" data-filter="sim">Simulaciones</button>
+    <button class="filter-btn" data-filter="doc">Materiales</button>
+    <button class="filter-btn" data-filter="interactive">Interactivos</button>
+    <button class="filter-btn" data-filter="1eso">1.º ESO</button>
+    <button class="filter-btn" data-filter="3eso">3.º ESO</button>
+    <button class="filter-btn" data-filter="4eso">4.º ESO</button>
+    <button class="filter-btn" data-filter="bach">Bachillerato</button>
+  </div>
+
+  <div class="resources" id="grid-recursos">
+
+    <div class="resource-card" data-tipo="sim" data-nivel="4eso">
+      <div class="resource-thumb sim">
+        🔬
+        <span class="resource-type-badge">Simulación</span>
+      </div>
+      <div class="resource-body">
+        <div class="resource-meta">
+          <span class="tag nivel">4.º ESO</span>
+          <span class="tag materia">Genética y evolución</span>
+        </div>
+        <h4>PhET — Genética de la mosca del vinagre</h4>
+        <p>Simulación de cruzamientos con Drosophila para trabajar herencia mendeliana de forma visual e interactiva.</p>
+        <div class="resource-footer">
+          <span class="license">CC BY 4.0 · PhET</span>
+          <a href="https://phet.colorado.edu/es/simulations/fruit-fly-genetics" target="_blank" class="btn-access">Acceder →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="resource-card" data-tipo="interactive" data-nivel="1eso">
+      <div class="resource-thumb interactive">
+        🌿
+        <span class="resource-type-badge">Ciencia ciudadana</span>
+      </div>
+      <div class="resource-body">
+        <div class="resource-meta">
+          <span class="tag nivel">1.º ESO</span>
+          <span class="tag materia">Seres vivos</span>
+        </div>
+        <h4>iNaturalist</h4>
+        <p>Plataforma para identificar y clasificar seres vivos del entorno mediante fotografías. Ideal para trabajo de campo digital.</p>
+        <div class="resource-footer">
+          <span class="license">CC BY-NC · iNaturalist</span>
+          <a href="https://www.inaturalist.org" target="_blank" class="btn-access">Acceder →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="resource-card" data-tipo="sim" data-nivel="3eso">
+      <div class="resource-thumb sim">
+        🫀
+        <span class="resource-type-badge">3D interactivo</span>
+      </div>
+      <div class="resource-body">
+        <div class="resource-meta">
+          <span class="tag nivel">3.º ESO</span>
+          <span class="tag materia">Cuerpo humano</span>
+        </div>
+        <h4>BioDigital Human</h4>
+        <p>Modelos 3D interactivos del cuerpo humano. Permite explorar todos los aparatos y sistemas con gran realismo.</p>
+        <div class="resource-footer">
+          <span class="license">Acceso libre · BioDigital</span>
+          <a href="https://human.biodigital.com" target="_blank" class="btn-access">Acceder →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══ PIE DE PÁGINA ══ -->
+<footer>
+  <p><strong>BioGeo logIA</strong> · Repositorio de Recursos Educativos en Abierto para Biología y Geología en Educación Secundaria</p>
+  <p>Trabajo Fin de Máster · <strong>Magdalena Matito Silvero</strong> · Máster de Formación del Profesorado · Universidad Rey Juan Carlos · 2025–2026</p>
+  <p>Tutor académico: <strong>Pablo Melón Jiménez</strong> · URJC</p>
+  <p>Todos los recursos bajo licencia <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons</a> · Sitio alojado en <a href="https://pages.github.com" target="_blank">GitHub Pages</a></p>
+</footer>
+
+<script>
+  /* ── Filtros de recursos ── */
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const filtro = this.dataset.filter;
+      document.querySelectorAll('.resource-card').forEach(card => {
+        if (filtro === 'todos') {
+          card.style.display = '';
+        } else {
+          const tipo  = card.dataset.tipo  || '';
+          const nivel = card.dataset.nivel || '';
+          card.style.display = (tipo === filtro || nivel === filtro) ? '' : 'none';
+        }
+      });
+    });
+  });
+
+  /* ── Buscador básico ── */
+  function buscar() {
+    const q = document.getElementById('buscador').value.toLowerCase().trim();
+    if (!q) return;
+    document.querySelectorAll('.resource-card').forEach(card => {
+      const texto = card.innerText.toLowerCase();
+      card.style.display = texto.includes(q) ? '' : 'none';
+    });
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  }
+
+  document.getElementById('buscador').addEventListener('keydown', e => {
+    if (e.key === 'Enter') buscar();
+  });
+</script>
+
+</body>
+</html>

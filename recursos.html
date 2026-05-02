@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recursos — BioGeo logIA</title>
+<meta name="description" content="Catálogo completo de Recursos Educativos en Abierto para Biología y Geología en ESO. Catalogados con metadatos Dublin Core.">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bio: #1B5E20;
+    --bio-light: #E8F5E9;
+    --bio-mid: #4CAF50;
+    --geo: #4E342E;
+    --geo-light: #EFEBE9;
+    --geo-mid: #8D6E63;
+    --accent: #FF8F00;
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --text: #1C1C1A;
+    --text-muted: #6B6B67;
+    --border: rgba(0,0,0,0.08);
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--geo);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFF;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--accent); font-style: italic; }
+
+  .logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+    align-self: center;
+  }
+
+  nav { display: flex; gap: 0.25rem; }
+
+  nav a {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  nav a:hover, nav a.active {
+    background: rgba(255,255,255,0.12);
+    color: #FFF;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: linear-gradient(135deg, var(--geo) 0%, #2E1B18 60%, #1B2E1B 100%);
+    padding: 3.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 85%, rgba(76,175,80,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 85% 15%, rgba(255,143,0,0.08) 0%, transparent 50%);
+  }
+
+  .page-header-content { position: relative; z-index: 1; }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #FFF;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-header p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-item strong {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-item span {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 300;
+  }
+
+  /* ── FILTROS ── */
+  .filter-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 64px;
+    z-index: 90;
+  }
+
+  .filter-bar-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-right: 0.5rem;
+  }
+
+  .filter-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.78rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--geo);
+    color: #FFF;
+    border-color: var(--geo);
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+
+  /* ── BLOQUE SECTION ── */
+  .bloque {
+    margin-bottom: 3.5rem;
+  }
+
+  .bloque-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--bio-light);
+  }
+
+  .bloque-icon {
+    font-size: 1.8rem;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bio-light);
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .bloque-info h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .bloque-info p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
+  .bloque-count {
+    margin-left: auto;
+    background: var(--bio-light);
+    color: var(--bio);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  /* ── RESOURCE GRID ── */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* ── RESOURCE CARD ── */
+  .resource-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .resource-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+    border-color: rgba(0,0,0,0.12);
+  }
+
+  .resource-card-top {
+    padding: 1.1rem 1.2rem 0.8rem;
+    flex: 1;
+  }
+
+  .resource-tags {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-bottom: 0.65rem;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .tag.nivel   { background: var(--bio-light); color: var(--bio); }
+  .tag.tipo    { background: var(--geo-light);  color: var(--geo); }
+  .tag.idioma  { background: #FFF8E1; color: #E65100; }
+
+  .resource-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .resource-card .descripcion {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ── METADATOS DUBLIN CORE ── */
+  .dublin-core {
+    padding: 0.8rem 1.2rem;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+
+  .dc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 12px;
+  }
+
+  .dc-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dc-label {
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .dc-value {
+    font-size: 0.72rem;
+    color: var(--text);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* ── RESOURCE FOOTER ── */
+  .resource-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .licencia {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .btn-acceder {
+    background: var(--geo);
+    color: #FFF;
+    border: none;
+    border-radius: 6px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-acceder:hover { background: #2E1B18; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--geo);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.78rem;
+    font-weight: 300;
+    margin-top: 4rem;
+    letter-spacing: 0.03em;
+    line-height: 1.8;
+  }
+
+  footer strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- ── CABECERA ── -->
+<header>
+  <a href="index.html" class="logo">
+    BioGeo<span>log</span>IA
+    <span class="logo-sub">Repositorio REA · Secundaria</span>
+  </a>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="recursos.html" class="active">Recursos</a>
+    <a href="niveles.html">Por nivel</a>
+    <a href="sobre.html">Sobre el proyecto</a>
+  </nav>
+</header>
+
+<!-- ── CABECERA DE PÁGINA ── -->
+<div class="page-header">
+  <div class="page-header-content">
+    <h1>Catálogo de recursos</h1>
+    <p>57 recursos educativos abiertos catalogados con metadatos Dublin Core, organizados por bloque temático y adaptados al currículo de la Comunidad de Madrid (LOMLOE)</p>
+    <div class="stats-bar">
+      <div class="stat-item"><strong>57</strong><span>Recursos</span></div>
+      <div class="stat-item"><strong>10</strong><span>Bloques</span></div>
+      <div class="stat-item"><strong>3</strong><span>Cursos ESO</span></div>
+      <div class="stat-item"><strong>100%</strong><span>Acceso libre</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── BARRA DE FILTROS ── -->
+<div class="filter-bar">
+  <div class="filter-bar-inner">
+    <span class="filter-label">Filtrar:</span>
+    <button class="filter-btn active" data-filter="todos">Todos</button>
+    <button class="filter-btn" data-filter="1eso">1.º ESO</button>
+    <button class="filter-btn" data-filter="3eso">3.º ESO</button>
+    <button class="filter-btn" data-filter="4eso">4.º ESO</button>
+    <button class="filter-btn" data-filter="simulacion">Simulaciones</button>
+    <button class="filter-btn" data-filter="video">Vídeos</button>
+    <button class="filter-btn" data-filter="interactivo">Interactivos</button>
+    <button class="filter-btn" data-filter="portal">Portales</button>
+    <button class="filter-btn" data-filter="material">Materiales</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- ══════════════════════════════════════════
+       BLOQUE 1 — PROYECTO CIENTÍFICO
+  ══════════════════════════════════════════ -->
+  <section class="bloque" data-bloque="proyecto-cientifico">
+    <div class="bloque-header">
+      <div class="bloque-icon">🔭</div>
+      <div class="bloque-info">
+        <h2>Bloque 1 — Proyecto científico</h2>
+        <p>Común a 1.º, 3.º y 4.º ESO · Método científico, experimentación y herramientas digitales</p>
+      </div>
+      <div class="bloque-count">4 recursos</div>
+    </div>
+    <div class="resource-grid">
+
+      <div class="resource-card" data-nivel="1eso 3eso 4eso" data-tipo="simulacion">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º–4.º ESO</span>
+            <span class="tag tipo">Simulación</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>PhET Interactive Simulations</h3>
+          <p class="descripcion">Colección de simulaciones interactivas para diseñar y ejecutar experimentos virtuales de biología, física y química. Permite al alumnado formular hipótesis y comprobarlas experimentalmente.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Universidad de Colorado</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Simulación interactiva</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY 4.0</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY 4.0 · Universidad de Colorado</span>
+          <a href="https://phet.colorado.edu/es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 3eso 4eso" data-tipo="video">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º–4.º ESO</span>
+            <span class="tag tipo">Vídeo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Khan Academy ES — Método científico</h3>
+          <p class="descripcion">Vídeos y ejercicios interactivos sobre las fases del método científico, formulación de hipótesis, variables y análisis de resultados. Adaptados al nivel de ESO.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Khan Academy</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Vídeo y ejercicios</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-NC-SA</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-NC-SA · Khan Academy</span>
+          <a href="https://es.khanacademy.org" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 3eso 4eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º–4.º ESO</span>
+            <span class="tag tipo">Portal</span>
+            <span class="tag idioma">ES / EN</span>
+          </div>
+          <h3>Scientix — European Schoolnet</h3>
+          <p class="descripcion">Portal europeo de recursos para la enseñanza de ciencias. Incluye proyectos y actividades de indagación científica para secundaria, con materiales adaptados al aula.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">European Schoolnet</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal educativo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español / Inglés</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · European Schoolnet</span>
+          <a href="https://www.scientix.eu" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 3eso 4eso" data-tipo="material">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º–4.º ESO</span>
+            <span class="tag tipo">Material</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Proyecto EDIA — CEDEC/INTEF</h3>
+          <p class="descripcion">Situaciones de aprendizaje basadas en indagación científica, diseñadas por docentes españoles en activo y directamente alineadas con la LOMLOE.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">CEDEC / INTEF / MEFP</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Unidad didáctica</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-SA 4.0</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-SA 4.0 · INTEF</span>
+          <a href="https://cedec.intef.es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BLOQUE 2 — GEOLOGÍA
+  ══════════════════════════════════════════ -->
+  <section class="bloque" data-bloque="geologia">
+    <div class="bloque-header">
+      <div class="bloque-icon">🪨</div>
+      <div class="bloque-info">
+        <h2>Bloque 2 — Geología</h2>
+        <p>Común a 1.º, 3.º y 4.º ESO · Rocas, minerales, tectónica de placas, riesgos naturales e historia geológica</p>
+      </div>
+      <div class="bloque-count">5 recursos</div>
+    </div>
+    <div class="resource-grid">
+
+      <div class="resource-card" data-nivel="1eso 3eso 4eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º–4.º ESO</span>
+            <span class="tag tipo">Portal</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>IGME — Instituto Geológico y Minero de España</h3>
+          <p class="descripcion">Fuente oficial española con mapas geológicos, recursos didácticos y materiales sobre geología española. Incluye sección lúdica con vídeos y juegos para secundaria.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">IGME — Gobierno de España</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal oficial</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · IGME</span>
+          <a href="https://www.igme.es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 3eso 4eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º–4.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Ambientech — Ciencias de la Tierra</h3>
+          <p class="descripcion">Plataforma educativa con itinerarios interactivos sobre geología, el agua, la energía y el medio ambiente. Contenidos adaptados a Educación Secundaria.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Ambientech</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Itinerario interactivo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Ambientech</span>
+          <a href="https://ambientech.org" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 3eso 4eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º–4.º ESO</span>
+            <span class="tag tipo">Portal docente</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Prácticas Geología</h3>
+          <p class="descripcion">Repositorio creado por profesores que recopila dinámicas, prácticas y recursos para enseñar geología de forma eficaz en secundaria. Buscador integrado por contenidos.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Comunidad docente</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Repositorio docente</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Comunidad docente</span>
+          <a href="https://practicasgeologia.com" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 3eso 4eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º–4.º ESO</span>
+            <span class="tag tipo">Herramienta digital</span>
+            <span class="tag idioma">ES / EN</span>
+          </div>
+          <h3>Google Earth</h3>
+          <p class="descripcion">Herramienta SIG imprescindible para estudiar geomorfología, relieves, fallas y vulcanismo a escala global mediante imágenes de satélite en 3D. Versión web gratuita.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Google</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Herramienta SIG</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español / Inglés</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Google</span>
+          <a href="https://earth.google.com/web/" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 3eso 4eso" data-tipo="material">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º–4.º ESO</span>
+            <span class="tag tipo">Material</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Proyecto EDIA — Investigando la geodiversidad</h3>
+          <p class="descripcion">Situación de aprendizaje sobre geodiversidad y patrimonio geológico, lista para aplicar en el aula. Alineada con la LOMLOE y creada por docentes en activo.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">CEDEC / INTEF / MEFP</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Unidad didáctica</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-SA 4.0</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-SA 4.0 · INTEF</span>
+          <a href="https://cedec.intef.es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BLOQUE 3 — LA CÉLULA
+  ══════════════════════════════════════════ -->
+  <section class="bloque" data-bloque="celula">
+    <div class="bloque-header">
+      <div class="bloque-icon">🧬</div>
+      <div class="bloque-info">
+        <h2>Bloque 3 — La célula</h2>
+        <p>1.º y 4.º ESO · Teoría celular, microscopio, mitosis, meiosis y núcleo celular</p>
+      </div>
+      <div class="bloque-count">7 recursos</div>
+    </div>
+    <div class="resource-grid">
+
+      <div class="resource-card" data-nivel="1eso 4eso" data-tipo="simulacion">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 4.º ESO</span>
+            <span class="tag tipo">Simulación</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>PhET — División celular</h3>
+          <p class="descripcion">Simulación interactiva de mitosis y meiosis con controles paso a paso. Permite al alumnado observar las fases de la división celular de forma visual y dinámica.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Universidad de Colorado</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Simulación interactiva</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY 4.0</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY 4.0 · PhET</span>
+          <a href="https://phet.colorado.edu/es/simulations/cell-division" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 4eso" data-tipo="video">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 4.º ESO</span>
+            <span class="tag tipo">Vídeo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Khan Academy ES — La célula</h3>
+          <p class="descripcion">Vídeos y ejercicios sobre teoría celular, organelas, diferencias entre célula procariota y eucariota, mitosis y meiosis adaptados a secundaria.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Khan Academy</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Vídeo y ejercicios</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-NC-SA</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-NC-SA · Khan Academy</span>
+          <a href="https://es.khanacademy.org" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 4eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 4.º ESO</span>
+            <span class="tag tipo">Portal docente</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Gobierno de Canarias — Recursos digitales: célula</h3>
+          <p class="descripcion">Recopilación curada de recursos digitales sobre la célula elaborada por docentes españoles. Incluye vídeos, animaciones y actividades interactivas.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Gobierno de Canarias</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal docente</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Gobierno de Canarias</span>
+          <a href="https://www3.gobiernodecanarias.org/medusa/ecoescuela/recursosdigitales/tag/celula/" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 4eso" data-tipo="material">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 4.º ESO</span>
+            <span class="tag tipo">Material</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Procomún INTEF — La célula</h3>
+          <p class="descripcion">Secuencias didácticas completas sobre la célula con actividades autoevaluables y trabajo colaborativo. Recurso oficial del Ministerio de Educación.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">INTEF / MEFP</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Secuencia didáctica</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-SA 4.0</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-SA 4.0 · INTEF</span>
+          <a href="https://procomun.intef.es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 4eso" data-tipo="video">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 4.º ESO</span>
+            <span class="tag tipo">Vídeo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Academia Play — La célula</h3>
+          <p class="descripcion">Vídeos divulgativos de calidad sobre la célula y sus componentes, adaptados al nivel de secundaria. Canal educativo en español con gran alcance entre estudiantes.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Academia Play (YouTube)</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Vídeo divulgativo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Academia Play</span>
+          <a href="https://www.youtube.com/@AcademiaPlay" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 4eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 4.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Wordwall — La célula</h3>
+          <p class="descripcion">Actividades interactivas creadas por docentes: crucigramas, cuestionarios, etiquetado de diagramas y juegos sobre organelas y funciones celulares.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Comunidad docente Wordwall</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Actividad gamificada</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Wordwall</span>
+          <a href="https://wordwall.net/es/community/célula" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 4eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 4.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Educaplay — La célula</h3>
+          <p class="descripcion">Plataforma con mapas interactivos, sopas de letras y tests de evaluación sobre orgánulos celulares y sus funciones. Recursos creados por docentes hispanohablantes.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Comunidad docente Educaplay</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Actividad gamificada</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Educaplay</span>
+          <a href="https://es.educaplay.com/recursos-educativos/4210290-partes_de_la_celula.html" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BLOQUE 4 — SERES VIVOS
+  ══════════════════════════════════════════ -->
+  <section class="bloque" data-bloque="seres-vivos">
+    <div class="bloque-header">
+      <div class="bloque-icon">🌿</div>
+      <div class="bloque-info">
+        <h2>Bloque 4 — Seres vivos</h2>
+        <p>1.º ESO · Los seis reinos, taxonomía, grupos principales e identificación de ejemplares del entorno</p>
+      </div>
+      <div class="bloque-count">8 recursos</div>
+    </div>
+    <div class="resource-grid">
+
+      <div class="resource-card" data-nivel="1eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º ESO</span>
+            <span class="tag tipo">Herramienta digital</span>
+            <span class="tag idioma">ES / EN</span>
+          </div>
+          <h3>iNaturalist</h3>
+          <p class="descripcion">Plataforma de ciencia ciudadana para identificar y clasificar seres vivos del entorno mediante fotografías. Con app móvil gratuita. Ideal para trabajo de campo digital.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">California Academy of Sciences</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Ciencia ciudadana</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español / Inglés</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-NC</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-NC · iNaturalist</span>
+          <a href="https://www.inaturalist.org" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso" data-tipo="video">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º ESO</span>
+            <span class="tag tipo">Vídeo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Khan Academy ES — Clasificación de los seres vivos</h3>
+          <p class="descripcion">Vídeos y ejercicios sobre los reinos, taxonomía linneana y características de los grupos principales de seres vivos. Adaptados a secundaria.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Khan Academy</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Vídeo y ejercicios</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-NC-SA</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-NC-SA · Khan Academy</span>
+          <a href="https://es.khanacademy.org" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º ESO</span>
+            <span class="tag tipo">Base de datos</span>
+            <span class="tag idioma">ES / EN</span>
+          </div>
+          <h3>GBIF — Biodiversidad en España</h3>
+          <p class="descripcion">Base de datos global de biodiversidad con registros de especies del entorno español. Permite búsquedas por comunidad autónoma y visualización de mapas de distribución.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">GBIF</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Base de datos abierta</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español / Inglés</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY 4.0</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY 4.0 · GBIF</span>
+          <a href="https://www.gbif.org/es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Wordwall — Seres vivos</h3>
+          <p class="descripcion">Actividades interactivas sobre clasificación de seres vivos: ruletas, concursos de preguntas y crucigramas creados por docentes para repasar los reinos de forma lúdica.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Comunidad docente Wordwall</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Actividad gamificada</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Wordwall</span>
+          <a href="https://wordwall.net/es/community/seres-vivos" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Educaplay — Seres vivos</h3>
+          <p class="descripcion">Tests de evaluación, mapas interactivos y sopas de letras sobre la clasificación de los seres vivos y los ecosistemas. Recursos creados por docentes hispanohablantes.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Comunidad docente Educaplay</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Actividad gamificada</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Educaplay</span>
+          <a href="https://es.educaplay.com" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Ambientech — Los cinco reinos</h3>
+          <p class="descripcion">Secuencias didácticas y animaciones interactivas sobre los reinos de la naturaleza. Contenidos adaptados a Educación Secundaria con enfoque medioambiental.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Ambientech</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Itinerario interactivo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Ambientech</span>
+          <a href="https://ambientech.org/cinco-reinos" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso" data-tipo="material">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º ESO</span>
+            <span class="tag tipo">Material</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Procomún INTEF — Seres vivos</h3>
+          <p class="descripcion">Proyectos curriculares y secuencias didácticas sobre seres vivos listos para aplicar en el aula. Recurso oficial del Ministerio de Educación alineado con la LOMLOE.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">INTEF / MEFP</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Secuencia didáctica</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-SA 4.0</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-SA 4.0 · INTEF</span>
+          <a href="https://procomun.intef.es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º ESO</span>
+            <span class="tag tipo">Portal científico</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>MNCN — Museo Nacional de Ciencias Naturales</h3>
+          <p class="descripcion">Cuadernos de actividades, guías y recursos digitales accesibles sobre biodiversidad y el reino animal. Fuente científica oficial del CSIC.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">MNCN — CSIC</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Recurso institucional</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · CSIC</span>
+          <a href="https://www.mncn.csic.es/es/visita-el-mncn/actividades/recursos-digitales-accesibles" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BLOQUE 5 — ECOLOGÍA Y SOSTENIBILIDAD
+  ══════════════════════════════════════════ -->
+  <section class="bloque" data-bloque="ecologia">
+    <div class="bloque-header">
+      <div class="bloque-icon">🌍</div>
+      <div class="bloque-info">
+        <h2>Bloque 5 — Ecología y sostenibilidad</h2>
+        <p>1.º ESO · Ecosistemas, biodiversidad, cambio climático y desarrollo sostenible</p>
+      </div>
+      <div class="bloque-count">3 recursos</div>
+    </div>
+    <div class="resource-grid">
+
+      <div class="resource-card" data-nivel="1eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Ambientech — Ecosistemas y medio ambiente</h3>
+          <p class="descripcion">Itinerarios interactivos sobre ecosistemas, ciclos biogeoquímicos y sostenibilidad muy bien adaptados a Educación Secundaria. Incluye actividades y evaluaciones.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Ambientech</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Itinerario interactivo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Ambientech</span>
+          <a href="https://ambientech.org" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>NASA Climate Kids</h3>
+          <p class="descripcion">Recursos interactivos sobre cambio climático, ecosistemas y sostenibilidad con datos reales de la NASA. Adaptado para estudiantes de secundaria, disponible en español.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">NASA</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal educativo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · NASA</span>
+          <a href="https://climatekids.nasa.gov/es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso" data-tipo="material">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º ESO</span>
+            <span class="tag tipo">Material</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>WWF España — Recursos educativos</h3>
+          <p class="descripcion">Materiales didácticos sobre biodiversidad, conservación y desarrollo sostenible elaborados por WWF España. Alineados con los ODS de la Agenda 2030. Acceso libre.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">WWF España</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Material didáctico</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · WWF España</span>
+          <a href="https://www.wwf.es/que_hacemos/educacion" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BLOQUE 6 — HÁBITOS SALUDABLES
+  ══════════════════════════════════════════ -->
+  <section class="bloque" data-bloque="habitos">
+    <div class="bloque-header">
+      <div class="bloque-icon">🥗</div>
+      <div class="bloque-info">
+        <h2>Bloque 6 — Hábitos saludables</h2>
+        <p>1.º y 3.º ESO · Nutrición, estilo de vida, drogas, salud sexual, salud física y mental</p>
+      </div>
+      <div class="bloque-count">5 recursos</div>
+    </div>
+    <div class="resource-grid">
+
+      <div class="resource-card" data-nivel="1eso 3eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 3.º ESO</span>
+            <span class="tag tipo">Portal oficial</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Ministerio de Sanidad — Estilos de Vida Saludable</h3>
+          <p class="descripcion">Portal oficial del Ministerio de Sanidad con herramientas interactivas y cuestionarios sobre actividad física, alimentación y hábitos saludables. Fuente institucional de referencia.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Ministerio de Sanidad</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal oficial</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Ministerio de Sanidad</span>
+          <a href="https://estilosdevidasaludable.sanidad.gob.es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 3eso" data-tipo="material">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 3.º ESO</span>
+            <span class="tag tipo">Material</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>AECC — Educación para la salud</h3>
+          <p class="descripcion">Materiales sobre hábitos saludables, prevención del tabaco y alcohol para secundaria. Incluye guías para el profesorado y actividades para el aula.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">AECC</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Material didáctico</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · AECC</span>
+          <a href="https://www.aecc.es/es/todo-sobre-cancer/prevencion/educacion" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 3eso" data-tipo="material">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 3.º ESO</span>
+            <span class="tag tipo">Material</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Proyecto EDIA — Salud y hábitos saludables</h3>
+          <p class="descripcion">Situaciones de aprendizaje sobre hábitos saludables directamente alineadas con la LOMLOE, diseñadas por docentes españoles en activo. Licencia Creative Commons.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">CEDEC / INTEF / MEFP</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Unidad didáctica</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-SA 4.0</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-SA 4.0 · INTEF</span>
+          <a href="https://cedec.intef.es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 3eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 3.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Wordwall — Hábitos saludables</h3>
+          <p class="descripcion">Miles de actividades interactivas sobre alimentación, nutrición y salud corporal: ruletas, sopas de letras y cuestionarios creados por la comunidad docente.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Comunidad docente Wordwall</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Actividad gamificada</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Wordwall</span>
+          <a href="https://wordwall.net/es/community/habitos-saludables" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="1eso 3eso" data-tipo="material">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">1.º / 3.º ESO</span>
+            <span class="tag tipo">Material</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>UNICEF Educa — Salud en la escuela</h3>
+          <p class="descripcion">Cuadernos de actividades para promover hábitos saludables y el bienestar físico y emocional del alumnado. Materiales elaborados por UNICEF España para el contexto escolar.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">UNICEF España</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Material didáctico</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · UNICEF España</span>
+          <a href="https://www.unicef.es/educa/biblioteca/educacion-salud-actividades-recursos" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BLOQUE 7 — CUERPO HUMANO
+  ══════════════════════════════════════════ -->
+  <section class="bloque" data-bloque="cuerpo-humano">
+    <div class="bloque-header">
+      <div class="bloque-icon">🫀</div>
+      <div class="bloque-info">
+        <h2>Bloque 7 — Cuerpo humano</h2>
+        <p>3.º ESO · Aparatos digestivo, respiratorio, circulatorio, excretor, reproductor y órganos de los sentidos</p>
+      </div>
+      <div class="bloque-count">7 recursos</div>
+    </div>
+    <div class="resource-grid">
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">3D interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Visible Body</h3>
+          <p class="descripcion">Modelos 3D interactivos de anatomía humana con todos los aparatos y sistemas. Permite rotar, disecar y explorar el cuerpo humano en detalle. Versión gratuita disponible.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Visible Body</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Modelo 3D interactivo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Freemium</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Freemium · Visible Body</span>
+          <a href="https://www.visiblebody.com/es/" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">3D interactivo</span>
+            <span class="tag idioma">ES / EN</span>
+          </div>
+          <h3>BioDigital Human</h3>
+          <p class="descripcion">Conocido como el "Google Earth" del cuerpo humano. Modelos 3D interactivos del cuerpo masculino y femenino, incluyendo anatomía, enfermedades y tratamientos. Acceso gratuito.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">BioDigital</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Modelo 3D interactivo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español / Inglés</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · BioDigital</span>
+          <a href="https://human.biodigital.com" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">3D interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Anatomía Humana 3D — UACH</h3>
+          <p class="descripcion">Plataforma abierta y gratuita creada por académicos universitarios. Permite visualizar estructuras y órganos desde diferentes ángulos con gran precisión anatómica.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Universidad Austral de Chile</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Modelo 3D interactivo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · UACH</span>
+          <a href="https://anatomiahumana3d.com" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="video">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">Vídeo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Khan Academy ES — Cuerpo humano</h3>
+          <p class="descripcion">Vídeos y ejercicios sobre los principales aparatos y sistemas del cuerpo humano. Contenidos adaptados al nivel de ESO con ejercicios de autoevaluación.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Khan Academy</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Vídeo y ejercicios</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-NC-SA</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-NC-SA · Khan Academy</span>
+          <a href="https://es.khanacademy.org" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="material">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">Material</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Proyecto EDIA — El cuerpo humano</h3>
+          <p class="descripcion">Situaciones de aprendizaje sobre anatomía y fisiología humana alineadas con la LOMLOE. Diseñadas por docentes españoles en activo con licencia Creative Commons.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">CEDEC / INTEF / MEFP</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Unidad didáctica</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-SA 4.0</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-SA 4.0 · INTEF</span>
+          <a href="https://cedec.intef.es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Wordwall — Cuerpo humano</h3>
+          <p class="descripcion">Actividades interactivas sobre anatomía: diagramas para etiquetar, cuestionarios y juegos sobre los aparatos y sistemas del cuerpo humano creados por docentes.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Comunidad docente Wordwall</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Actividad gamificada</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Wordwall</span>
+          <a href="https://wordwall.net/es/community/juegos-del-cuerpo-humano" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">Portal docente</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Gobierno de Canarias — Anatomía</h3>
+          <p class="descripcion">Enciclopedia ilustrada sobre los aparatos y sistemas del cuerpo humano con material audiovisual y fichas didácticas. Recurso curado por docentes españoles.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Gobierno de Canarias</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal docente</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Gobierno de Canarias</span>
+          <a href="https://www3.gobiernodecanarias.org/medusa/ecoescuela/recursosdigitales/tag/anatomia/" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BLOQUE 8 — SALUD Y ENFERMEDAD
+  ══════════════════════════════════════════ -->
+  <section class="bloque" data-bloque="salud-enfermedad">
+    <div class="bloque-header">
+      <div class="bloque-icon">💉</div>
+      <div class="bloque-info">
+        <h2>Bloque 8 — Salud y enfermedad</h2>
+        <p>3.º ESO · Sistema inmunitario, patógenos, vacunas, antibióticos, trasplantes y donación de órganos</p>
+      </div>
+      <div class="bloque-count">6 recursos</div>
+    </div>
+    <div class="resource-grid">
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Xplore Health</h3>
+          <p class="descripcion">Portal europeo con recursos interactivos sobre investigación biomédica, vacunas e inmunología adaptados a secundaria. Incluye laboratorios virtuales y materiales para el profesorado.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Xplore Health</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal educativo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Xplore Health</span>
+          <a href="https://www.xplorehealth.eu" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="video">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">Vídeo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Khan Academy ES — Sistema inmunitario</h3>
+          <p class="descripcion">Vídeos y ejercicios sobre inmunología, mecanismos de defensa del organismo, vacunas y anticuerpos. Adaptados al nivel de secundaria con autoevaluaciones.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Khan Academy</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Vídeo y ejercicios</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-NC-SA</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-NC-SA · Khan Academy</span>
+          <a href="https://es.khanacademy.org" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">Portal oficial</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>ONT — Donación y trasplantes</h3>
+          <p class="descripcion">Materiales didácticos oficiales sobre donación de órganos y trasplantes para secundaria. Fuente oficial española con guías para el profesorado y actividades para el alumnado.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">ONT — Ministerio de Sanidad</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Material institucional</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · ONT</span>
+          <a href="https://www.ont.es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="material">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">Material</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Siemens Stiftung — Sistema inmune y salud</h3>
+          <p class="descripcion">Materiales abiertos sobre el cuerpo humano, sistema inmune, nutrición y educación sexual integral. Recursos de alta calidad elaborados por una fundación educativa internacional.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Siemens Stiftung</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Material didáctico</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-SA</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-SA · Siemens Stiftung</span>
+          <a href="https://crea-portaldemedios.siemens-stiftung.org/material-didactico-sobre-la-salud" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">Portal</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Escuela Madrileña de Salud</h3>
+          <p class="descripcion">Recursos digitalizados para fomentar el autocuidado y estilos de vida saludables en el contexto educativo madrileño. Especialmente relevante para centros de la Comunidad de Madrid.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Comunidad de Madrid</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal educativo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Com. de Madrid</span>
+          <a href="https://www.comunidad.madrid/hospital/atencionprimaria/ciudadanos/recursos-educativos-digitalizados" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="3eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">3.º ESO</span>
+            <span class="tag tipo">Portal</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>MedlinePlus en español</h3>
+          <p class="descripcion">Fuente oficial de información sanitaria de los NIH. Excelente para consulta de enfermedades, prevención, medicamentos y salud. Rigor científico y acceso libre.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">NIH — EE.UU.</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Enciclopedia médica</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · NIH</span>
+          <a href="https://medlineplus.gov/spanish/" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BLOQUE 9 — GENÉTICA Y EVOLUCIÓN
+  ══════════════════════════════════════════ -->
+  <section class="bloque" data-bloque="genetica-evolucion">
+    <div class="bloque-header">
+      <div class="bloque-icon">🧪</div>
+      <div class="bloque-info">
+        <h2>Bloque 9 — Genética y evolución</h2>
+        <p>4.º ESO · ADN, ARN, leyes de Mendel, herencia genética, teorías evolutivas y evidencias de la evolución</p>
+      </div>
+      <div class="bloque-count">6 recursos</div>
+    </div>
+    <div class="resource-grid">
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="simulacion">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Simulación</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>PhET — Genética de la mosca del vinagre</h3>
+          <p class="descripcion">Simulación de cruzamientos genéticos con Drosophila. Permite resolver problemas de herencia mendeliana y observar la transmisión de caracteres de forma visual e interactiva.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Universidad de Colorado</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Simulación interactiva</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY 4.0</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY 4.0 · PhET</span>
+          <a href="https://phet.colorado.edu/es/simulations/fruit-fly-genetics" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="video">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Vídeo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Khan Academy ES — Genética y evolución</h3>
+          <p class="descripcion">Vídeos y ejercicios sobre ADN, expresión génica, leyes de Mendel y teorías evolutivas. Incluye problemas de genética resueltos paso a paso.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Khan Academy</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Vídeo y ejercicios</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-NC-SA</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-NC-SA · Khan Academy</span>
+          <a href="https://es.khanacademy.org" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Portal educativo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Aprende Genética — Universidad de Alcalá</h3>
+          <p class="descripcion">Plataforma española de recursos interactivos sobre genética mendeliana, molecular y evolutiva. Creada por docentes universitarios con acceso libre y en español.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Universidad de Alcalá</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal educativo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · UAH</span>
+          <a href="https://aprendegenomica.es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Portal educativo</span>
+            <span class="tag idioma">ES / EN</span>
+          </div>
+          <h3>HHMI BioInteractive</h3>
+          <p class="descripcion">Recursos gratuitos de altísima calidad del Instituto Médico Howard Hughes. Animaciones, vídeos y talleres sobre genética y evolución ampliamente utilizados internacionalmente.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">HHMI BioInteractive</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal educativo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español / Inglés</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-NC-SA</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-NC-SA · HHMI</span>
+          <a href="https://www.biointeractive.org/es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Portal educativo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Congen.es</h3>
+          <p class="descripcion">Recursos educativos específicos sobre genética: alelos complejos, cromosomas y tipos de herencia. Diseñado para el contexto educativo español con contenidos curriculares.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Congen.es</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal educativo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Congen.es</span>
+          <a href="https://www.congen.es" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Blog docente</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>La RuBisCO es lo más</h3>
+          <p class="descripcion">Blog educativo de referencia entre el profesorado de Biología con juegos, actividades, simulaciones y materiales prácticos directamente aplicables al aula de secundaria.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Docentes de Biología</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Blog docente</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · Comunidad docente</span>
+          <a href="https://www.larubiscoeslomas.com" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BLOQUE 10 — LA TIERRA EN EL UNIVERSO
+  ══════════════════════════════════════════ -->
+  <section class="bloque" data-bloque="tierra-universo">
+    <div class="bloque-header">
+      <div class="bloque-icon">🌌</div>
+      <div class="bloque-info">
+        <h2>Bloque 10 — La Tierra en el universo</h2>
+        <p>4.º ESO · Origen del universo, origen de la vida, astrobiología e investigaciones en curso</p>
+      </div>
+      <div class="bloque-count">6 recursos</div>
+    </div>
+    <div class="resource-grid">
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Portal oficial</span>
+            <span class="tag idioma">ES / EN</span>
+          </div>
+          <h3>NASA en español</h3>
+          <p class="descripcion">Portal oficial de la NASA con recursos sobre el origen del universo, exploración espacial y astrobiología. Noticias científicas, imágenes y materiales educativos de referencia.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">NASA</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal oficial</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español / Inglés</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · NASA</span>
+          <a href="https://www.nasa.gov/es/" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="video">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Vídeo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>Khan Academy ES — Cosmología y astronomía</h3>
+          <p class="descripcion">Vídeos y ejercicios sobre el origen del universo, la formación del sistema solar y las hipótesis sobre el origen de la vida en la Tierra. Licencia CC BY-NC-SA.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Khan Academy</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Vídeo y ejercicios</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">CC BY-NC-SA</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">CC BY-NC-SA · Khan Academy</span>
+          <a href="https://es.khanacademy.org" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="portal">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Portal científico</span>
+            <span class="tag idioma">EN</span>
+          </div>
+          <h3>Astrobiology at NASA</h3>
+          <p class="descripcion">Portal específico de astrobiología de la NASA con recursos educativos sobre el origen de la vida y la búsqueda de vida extraterrestre. Fuente científica de primer nivel.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">NASA Astrobiology</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal científico</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Inglés</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · NASA</span>
+          <a href="https://astrobiology.nasa.gov" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="simulacion">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Simulación</span>
+            <span class="tag idioma">ES / EN</span>
+          </div>
+          <h3>Stellarium</h3>
+          <p class="descripcion">Planetario de código abierto en tiempo real. Permite explorar el cielo, localizar constelaciones, planetas y entender los movimientos de la Tierra desde cualquier lugar y fecha.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">Stellarium</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Simulación / Planetario</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español / Inglés</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">GNU GPL (código abierto)</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">GNU GPL · Stellarium</span>
+          <a href="https://stellarium-web.org" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="interactivo">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Interactivo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>NASA Space Place</h3>
+          <p class="descripcion">Web oficial de la NASA adaptada para estudiantes. Artículos, animaciones y juegos interactivos que explican el clima espacial, la Tierra y el sistema solar de forma accesible.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">NASA</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Portal educativo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · NASA</span>
+          <a href="https://spaceplace.nasa.gov/sp/" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="resource-card" data-nivel="4eso" data-tipo="video">
+        <div class="resource-card-top">
+          <div class="resource-tags">
+            <span class="tag nivel">4.º ESO</span>
+            <span class="tag tipo">Vídeo</span>
+            <span class="tag idioma">ES</span>
+          </div>
+          <h3>QuantumFracture</h3>
+          <p class="descripcion">Canal de YouTube de divulgación científica rigurosa en español. Explica de forma visual y accesible los misterios del cosmos, el origen del universo y la física moderna.</p>
+        </div>
+        <div class="dublin-core">
+          <div class="dc-grid">
+            <div class="dc-item"><span class="dc-label">Fuente</span><span class="dc-value">QuantumFracture (YouTube)</span></div>
+            <div class="dc-item"><span class="dc-label">Tipo</span><span class="dc-value">Vídeo divulgativo</span></div>
+            <div class="dc-item"><span class="dc-label">Idioma</span><span class="dc-value">Español</span></div>
+            <div class="dc-item"><span class="dc-label">Licencia</span><span class="dc-value">Acceso libre</span></div>
+          </div>
+        </div>
+        <div class="resource-footer">
+          <span class="licencia">Acceso libre · QuantumFracture</span>
+          <a href="https://www.youtube.com/@QuantumFracture" target="_blank" class="btn-acceder">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ── PIE DE PÁGINA ── -->
+<footer>
+  <p><strong>BioGeo logIA</strong> · Repositorio de Recursos Educativos en Abierto para Biología y Geología en Educación Secundaria</p>
+  <p>Trabajo Fin de Máster · <strong>Magdalena Matito Silvero</strong> · Máster de Formación del Profesorado · Universidad Rey Juan Carlos · 2025–2026</p>
+  <p>Tutor académico: <strong>Pablo Melón Jiménez</strong> · URJC</p>
+  <p>Todos los recursos bajo licencia <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons</a> · Sitio alojado en <a href="https://pages.github.com" target="_blank">GitHub Pages</a></p>
+</footer>
+
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const filtro = this.dataset.filter;
+      document.querySelectorAll('.resource-card').forEach(card => {
+        if (filtro === 'todos') {
+          card.style.display = '';
+        } else {
+          const nivel = card.dataset.nivel || '';
+          const tipo  = card.dataset.tipo  || '';
+          card.style.display = (nivel.includes(filtro) || tipo === filtro) ? '' : 'none';
+        }
+      });
+      document.querySelectorAll('.bloque').forEach(bloque => {
+        if (filtro === 'todos') {
+          bloque.style.display = '';
+        } else {
+          const visibles = bloque.querySelectorAll('.resource-card:not([style*="none"])');
+          bloque.style.display = visibles.length > 0 ? '' : 'none';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
