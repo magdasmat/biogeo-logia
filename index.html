@@ -285,6 +285,160 @@
     text-transform: uppercase;
     margin-top: 4px;
   }
+  /* ── CARRUSEL IA ── */
+  .ia-carousel-section {
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+    padding: 3rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ia-carousel-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 80% 20%, rgba(255,143,0,0.12) 0%, transparent 50%);
+  }
+
+  .ia-carousel-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ia-carousel-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .ia-carousel-title h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #FFF;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+
+  .ia-carousel-title h2 em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .ia-carousel-title p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+  }
+
+  .ia-carousel-link {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 0.2s;
+  }
+
+  .ia-carousel-link:hover { gap: 8px; }
+
+  .ia-carousel-controls {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+  }
+
+  .ia-arrow {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #FFF;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ia-arrow:hover { background: rgba(255,255,255,0.25); }
+
+  .ia-carousel-track-wrapper {
+    overflow: hidden;
+    margin: 0 -0.5rem;
+  }
+
+  .ia-carousel-track {
+    display: flex;
+    gap: 0.85rem;
+    padding: 0.25rem 0.5rem;
+    transition: transform 0.4s ease;
+  }
+
+  .ia-card-mini {
+    flex: 0 0 220px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ia-card-mini:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateY(-3px);
+    border-color: var(--accent);
+  }
+
+  .ia-card-mini-emoji {
+    font-size: 1.7rem;
+    width: 42px;
+    height: 42px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ia-card-mini h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .ia-card-mini p {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .ia-card-mini-tag {
+    font-size: 0.6rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--accent);
+    margin-top: 4px;
+  }
 
   /* ── MAIN ── */
   main { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
@@ -548,6 +702,7 @@
     <a href="index.html" class="active">Inicio</a>
     <a href="recursos.html">Recursos</a>
     <a href="niveles.html">Por nivel</a>
+    <a href="ia.html">IA para docentes</a>
     <a href="sobre.html">Sobre el proyecto</a>
   </nav>
   <button class="hamburger" onclick="toggleMenu(this)" aria-label="Abrir menú">
@@ -561,6 +716,7 @@
   <a href="index.html" class="active">Inicio</a>
   <a href="recursos.html">Recursos</a>
   <a href="niveles.html">Por nivel</a>
+  <a href="ia.html">IA para docentes</a>
   <a href="sobre.html">Sobre el proyecto</a>
 </div>
 
@@ -744,6 +900,99 @@
   </div>
 </main>
 
+<!-- ══ CARRUSEL DE IA DOCENTE ══ -->
+<section class="ia-carousel-section">
+  <div class="ia-carousel-inner">
+
+    <div class="ia-carousel-header">
+      <div class="ia-carousel-title">
+        <h2>Descubre <em>IAs</em> para tus clases</h2>
+        <p>Herramientas de Inteligencia Artificial para planificar, evaluar y crear materiales</p>
+      </div>
+      <a href="ia.html" class="ia-carousel-link">Ver todas →</a>
+      <div class="ia-carousel-controls">
+        <button class="ia-arrow" onclick="moverCarrusel(-1)" aria-label="Anterior">‹</button>
+        <button class="ia-arrow" onclick="moverCarrusel(1)" aria-label="Siguiente">›</button>
+      </div>
+    </div>
+
+    <div class="ia-carousel-track-wrapper">
+      <div class="ia-carousel-track" id="ia-track">
+
+        <a href="ia.html#magicschool" class="ia-card-mini">
+          <div class="ia-card-mini-emoji">🪄</div>
+          <h4>MagicSchool.ai</h4>
+          <p>Asistente docente con más de 80 funciones para planificar, evaluar y crear materiales.</p>
+          <span class="ia-card-mini-tag">IA Educativa</span>
+        </a>
+
+        <a href="ia.html#diffit" class="ia-card-mini">
+          <div class="ia-card-mini-emoji">📊</div>
+          <h4>Diffit</h4>
+          <p>Adapta textos complejos a distintos niveles de lectura. Ideal para diversidad.</p>
+          <span class="ia-card-mini-tag">IA Educativa</span>
+        </a>
+
+        <a href="ia.html#notebooklm" class="ia-card-mini">
+          <div class="ia-card-mini-emoji">📓</div>
+          <h4>NotebookLM</h4>
+          <p>Resume documentos y genera podcasts educativos a partir de tus apuntes.</p>
+          <span class="ia-card-mini-tag">Documentos · IA</span>
+        </a>
+
+        <a href="ia.html#gamma" class="ia-card-mini">
+          <div class="ia-card-mini-emoji">✨</div>
+          <h4>Gamma.app</h4>
+          <p>Crea presentaciones profesionales automáticamente desde un texto.</p>
+          <span class="ia-card-mini-tag">Creación Visual</span>
+        </a>
+
+        <a href="ia.html#eduaide" class="ia-card-mini">
+          <div class="ia-card-mini-emoji">📚</div>
+          <h4>Eduaide.ai</h4>
+          <p>Más de 150 herramientas de IA para planificar y evaluar.</p>
+          <span class="ia-card-mini-tag">IA Educativa</span>
+        </a>
+
+        <a href="ia.html#canva" class="ia-card-mini">
+          <div class="ia-card-mini-emoji">🎨</div>
+          <h4>Canva Magic Studio</h4>
+          <p>Crea infografías y carteles científicos con IA. Gratuito para docentes.</p>
+          <span class="ia-card-mini-tag">Creación Visual</span>
+        </a>
+
+        <a href="ia.html#khanmigo" class="ia-card-mini">
+          <div class="ia-card-mini-emoji">🎯</div>
+          <h4>Khanmigo</h4>
+          <p>Tutoría con método socrático integrada en Khan Academy.</p>
+          <span class="ia-card-mini-tag">IA Educativa</span>
+        </a>
+
+        <a href="ia.html#claude" class="ia-card-mini">
+          <div class="ia-card-mini-emoji">🟠</div>
+          <h4>Claude</h4>
+          <p>IA con tono ético, ideal para análisis de textos y feedback narrativo.</p>
+          <span class="ia-card-mini-tag">General</span>
+        </a>
+
+        <a href="ia.html#perplexity" class="ia-card-mini">
+          <div class="ia-card-mini-emoji">🔍</div>
+          <h4>Perplexity AI</h4>
+          <p>Búsquedas con IA y fuentes citadas. Perfecto para verificación científica.</p>
+          <span class="ia-card-mini-tag">Búsqueda · IA</span>
+        </a>
+
+        <a href="ia.html#curipod" class="ia-card-mini">
+          <div class="ia-card-mini-emoji">💬</div>
+          <h4>Curipod</h4>
+          <p>Convierte cualquier tema en una clase interactiva con encuestas y preguntas.</p>
+          <span class="ia-card-mini-tag">IA Educativa</span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ══ PIE DE PÁGINA ══ -->
 <footer>
   <p><strong>BioGeo logIA</strong> · Repositorio de Recursos Educativos en Abierto para Biología y Geología en Educación Secundaria</p>
@@ -790,6 +1039,17 @@
   function toggleMenu(btn) {
     btn.classList.toggle('open');
     document.getElementById('nav-mobile').classList.toggle('open');
+  }
+
+  let posicionCarrusel = 0;
+  function moverCarrusel(dir) {
+    const track = document.getElementById('ia-track');
+    if (!track) return;
+    const cardWidth = 232;
+    const visibleCards = Math.floor(track.parentElement.offsetWidth / cardWidth);
+    const maxPos = Math.max(0, track.children.length - visibleCards);
+    posicionCarrusel = Math.max(0, Math.min(maxPos, posicionCarrusel + dir));
+    track.style.transform = `translateX(-${posicionCarrusel * cardWidth}px)`;
   }
 
 </script>

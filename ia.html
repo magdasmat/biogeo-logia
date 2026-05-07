@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA para docentes — BioGeo logIA</title>
+<meta name="description" content="Herramientas de Inteligencia Artificial para la docencia: IAs generales, educativas y de creación visual. Guía para el profesorado de Biología y Geología.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bio: #1B5E20;
+    --bio-light: #E8F5E9;
+    --bio-mid: #4CAF50;
+    --geo: #4E342E;
+    --geo-light: #EFEBE9;
+    --geo-mid: #8D6E63;
+    --accent: #FF8F00;
+    --ia-general: #1565C0;
+    --ia-general-light: #E3F2FD;
+    --ia-edu: #6A1B9A;
+    --ia-edu-light: #F3E5F5;
+    --ia-visual: #00695C;
+    --ia-visual-light: #E0F2F1;
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --text: #1C1C1A;
+    --text-muted: #6B6B67;
+    --border: rgba(0,0,0,0.08);
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--geo);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFF;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--accent); font-style: italic; }
+
+  .logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+    align-self: center;
+  }
+
+  nav { display: flex; gap: 0.25rem; }
+
+  nav a {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  nav a:hover, nav a.active {
+    background: rgba(255,255,255,0.12);
+    color: #FFF;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    z-index: 200;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #FFF;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-mobile {
+    display: none;
+    position: fixed;
+    top: 67px;
+    left: 0; right: 0;
+    background: var(--geo);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 1rem;
+    z-index: 99;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .nav-mobile.open { display: flex; }
+
+  .nav-mobile a {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .nav-mobile a:hover, .nav-mobile a.active {
+    background: rgba(255,255,255,0.12);
+    color: #FFF;
+  }
+
+  @media (max-width: 640px) {
+    .hamburger { display: flex; }
+    nav { display: none; }
+    .logo-sub { display: none; }
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: linear-gradient(135deg, var(--geo) 0%, #2E1B18 60%, #1B2E1B 100%);
+    padding: 3.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 85%, rgba(76,175,80,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 85% 15%, rgba(255,143,0,0.08) 0%, transparent 50%);
+  }
+
+  .page-header-content { position: relative; z-index: 1; }
+
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #FFF;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-header p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── MAIN ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+
+  /* ── AVISO ── */
+  .aviso {
+    background: #FFF8E1;
+    border: 1px solid #FFD54F;
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1rem 1.4rem;
+    margin-bottom: 3rem;
+    font-size: 0.85rem;
+    color: #5D4037;
+    line-height: 1.6;
+  }
+
+  /* ── SECTION ── */
+  .ia-section { margin-bottom: 3.5rem; }
+
+  .ia-section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid;
+  }
+
+  .ia-section-header.general { border-color: var(--ia-general-light); }
+  .ia-section-header.educativa { border-color: var(--ia-edu-light); }
+  .ia-section-header.visual { border-color: var(--ia-visual-light); }
+
+  .ia-section-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .ia-section-icon.general { background: var(--ia-general-light); }
+  .ia-section-icon.educativa { background: var(--ia-edu-light); }
+  .ia-section-icon.visual { background: var(--ia-visual-light); }
+
+  .ia-section-info h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .ia-section-info p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
+  /* ── IA GRID ── */
+  .ia-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* ── IA CARD ── */
+  .ia-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ia-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+  }
+
+  .ia-card-header {
+    padding: 1.2rem 1.2rem 0.8rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+
+  .ia-emoji {
+    font-size: 1.8rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  .ia-emoji.general { background: var(--ia-general-light); }
+  .ia-emoji.educativa { background: var(--ia-edu-light); }
+  .ia-emoji.visual { background: var(--ia-visual-light); }
+
+  .ia-card-title h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 2px;
+  }
+
+  .ia-developer {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .ia-card-body {
+    padding: 0 1.2rem 1rem;
+    flex: 1;
+  }
+
+  .ia-row {
+    margin-bottom: 0.7rem;
+  }
+
+  .ia-row-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+  }
+
+  .ia-row p {
+    font-size: 0.78rem;
+    color: var(--text);
+    line-height: 1.55;
+    font-weight: 300;
+  }
+
+  .ia-row p.fortaleza { color: #2E7D32; }
+  .ia-row p.limitacion { color: #B71C1C; }
+
+  .ia-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .ia-tag.general { background: var(--ia-general-light); color: var(--ia-general); }
+  .ia-tag.educativa { background: var(--ia-edu-light); color: var(--ia-edu); }
+  .ia-tag.visual { background: var(--ia-visual-light); color: var(--ia-visual); }
+
+  .ia-card-footer {
+    padding: 0.75rem 1.2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ia-acceso {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .btn-ia {
+    background: var(--geo);
+    color: #FFF;
+    border: none;
+    border-radius: 6px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-ia:hover { background: #2E1B18; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--geo);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.78rem;
+    font-weight: 300;
+    margin-top: 4rem;
+    letter-spacing: 0.03em;
+    line-height: 1.8;
+  }
+
+  footer strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    BioGeo<span>log</span>IA
+    <span class="logo-sub">Repositorio REA · Secundaria</span>
+  </a>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="recursos.html">Recursos</a>
+    <a href="niveles.html">Por nivel</a>
+    <a href="ia.html" class="active">IA para docentes</a>
+    <a href="sobre.html">Sobre el proyecto</a>
+  </nav>
+  <button class="hamburger" onclick="toggleMenu(this)" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html">Inicio</a>
+  <a href="recursos.html">Recursos</a>
+  <a href="niveles.html">Por nivel</a>
+  <a href="ia.html" class="active">IA para docentes</a>
+  <a href="sobre.html">Sobre el proyecto</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-content">
+    <h1>IA para docentes</h1>
+    <p>Herramientas de inteligencia artificial para planificar clases, generar materiales, personalizar el aprendizaje y crear recursos visuales. Selección actualizada para el profesorado de Biología y Geología.</p>
+  </div>
+</div>
+
+<main>
+
+  <div class="aviso">
+    ⚠️ <strong>Nota de uso responsable:</strong> Estas herramientas no sustituyen la planificación didáctica ni la mediación pedagógica. Es esencial verificar la precisión de los contenidos generados, respetar la propiedad intelectual y reflexionar críticamente sobre el papel de la IA en los procesos de enseñanza-aprendizaje.
+  </div>
+
+  <!-- ══ IAs GENERALES ══ -->
+  <section class="ia-section" id="generales">
+    <div class="ia-section-header general">
+      <div class="ia-section-icon general">🤖</div>
+      <div class="ia-section-info">
+        <h2>IAs generales</h2>
+        <p>Modelos conversacionales de uso amplio con aplicaciones directas en la docencia</p>
+      </div>
+    </div>
+    <div class="ia-grid">
+
+      <div class="ia-card" id="chatgpt">
+        <div class="ia-card-header">
+          <div class="ia-emoji general">💬</div>
+          <div class="ia-card-title">
+            <h3>ChatGPT</h3>
+            <div class="ia-developer">OpenAI</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag general">General</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Gran versatilidad, razonamiento avanzado, multimodal (texto, imagen, voz).</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Modelo cerrado, riesgo de dependencia y sesgos.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Tutoría virtual, generación de materiales, redacción académica.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · OpenAI</span>
+          <a href="https://chat.openai.com" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="claude">
+        <div class="ia-card-header">
+          <div class="ia-emoji general">🧠</div>
+          <div class="ia-card-title">
+            <h3>Claude (Sonnet / Opus)</h3>
+            <div class="ia-developer">Anthropic</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag general">General</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Excelente comprensión contextual, tono ético y seguro, manejo de textos largos.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Menor integración con herramientas ofimáticas.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Feedback narrativo, análisis de textos, diseño de rúbricas. Asistente en el desarrollo de este repositorio.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Anthropic</span>
+          <a href="https://claude.ai" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="gemini">
+        <div class="ia-card-header">
+          <div class="ia-emoji general">✨</div>
+          <div class="ia-card-title">
+            <h3>Gemini 2.0 (Pro / Flash)</h3>
+            <div class="ia-developer">Google DeepMind</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag general">General</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Integrado en Google Workspace, acceso directo a la web, multimodal.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Necesita cuenta Google, dependencia del ecosistema.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Creación de materiales en Docs/Slides, búsqueda informada, generación de imágenes.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Google</span>
+          <a href="https://gemini.google.com" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="copilot">
+        <div class="ia-card-header">
+          <div class="ia-emoji general">🪟</div>
+          <div class="ia-card-title">
+            <h3>Copilot</h3>
+            <div class="ia-developer">Microsoft / OpenAI</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag general">General</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Integrado en Word, PowerPoint y Teams. Muy útil para tareas docentes rutinarias.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Depende del ecosistema Microsoft y licencias 365.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Automatización de informes, correos, presentaciones y planificaciones de clase.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Microsoft</span>
+          <a href="https://copilot.microsoft.com" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="perplexity">
+        <div class="ia-card-header">
+          <div class="ia-emoji general">🔍</div>
+          <div class="ia-card-title">
+            <h3>Perplexity AI</h3>
+            <div class="ia-developer">Perplexity AI</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag general">General</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Combina chat y búsqueda con fuentes verificables. Muy fiable en información actualizada.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Menos creativo, interfaz más técnica.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Enseñar pensamiento crítico, búsquedas documentadas con citas verificables.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Perplexity AI</span>
+          <a href="https://www.perplexity.ai" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="deepseek">
+        <div class="ia-card-header">
+          <div class="ia-emoji general">⚡</div>
+          <div class="ia-card-title">
+            <h3>DeepSeek R1</h3>
+            <div class="ia-developer">DeepSeek AI</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag general">General</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Código abierto, alto rendimiento en razonamiento lógico, eficiente y transparente.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Interfaz menos amigable, español mejorable. Dudas sobre privacidad de datos.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Análisis académico, proyectos STEM, investigación educativa.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Gratuito · DeepSeek AI</span>
+          <a href="https://www.deepseek.com" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="metaai">
+        <div class="ia-card-header">
+          <div class="ia-emoji general">∞</div>
+          <div class="ia-card-title">
+            <h3>Meta AI (LLaMA 3)</h3>
+            <div class="ia-developer">Meta Platforms</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag general">General</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Gratuito, integrable en redes sociales y apps. Fuerte en chat informal.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Limitado en precisión científica, no siempre citacional.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Microtutoría o comunicación educativa informal.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Gratuito · Meta</span>
+          <a href="https://www.meta.ai" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="mistral">
+        <div class="ia-card-header">
+          <div class="ia-emoji general">🌬️</div>
+          <div class="ia-card-title">
+            <h3>Mistral / Mixtral</h3>
+            <div class="ia-developer">Mistral AI (Europa)</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag general">General</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Modelos open-weight europeos, rápidos y ligeros. Soberanía de datos europea.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Menor coherencia conversacional prolongada.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Formación en IA abierta, experimentación investigadora.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Mistral AI</span>
+          <a href="https://mistral.ai" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ IAs EDUCATIVAS ══ -->
+  <section class="ia-section" id="educativas">
+    <div class="ia-section-header educativa">
+      <div class="ia-section-icon educativa">🎓</div>
+      <div class="ia-section-info">
+        <h2>IAs educativas</h2>
+        <p>Plataformas especializadas para la planificación docente, generación de materiales y atención a la diversidad</p>
+      </div>
+    </div>
+    <div class="ia-grid">
+
+      <div class="ia-card" id="notebooklm">
+        <div class="ia-card-header">
+          <div class="ia-emoji educativa">📓</div>
+          <div class="ia-card-title">
+            <h3>NotebookLM</h3>
+            <div class="ia-developer">Google</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag educativa">Educativa</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Basado en Gemini 2.0. Genera resúmenes, mapas mentales, podcasts de audio, vídeos explicativos y fichas desde tus propios documentos. Disponible para menores de 18 en Google Workspace for Education.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Solo trabaja con los documentos que tú subes. Requiere cuenta Google.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Convertir apuntes y PDFs en guías de estudio, podcasts educativos, mapas conceptuales y tablas de datos exportables a Google Sheets.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Gratuito · Google</span>
+          <a href="https://notebooklm.google.com" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="magicschool">
+        <div class="ia-card-header">
+          <div class="ia-emoji educativa">🪄</div>
+          <div class="ia-card-title">
+            <h3>MagicSchool.ai</h3>
+            <div class="ia-developer">MagicSchool AI</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag educativa">Educativa</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Más de 50 funciones docentes. Genera rúbricas, cuestionarios, informes, actividades diferenciadas y comentarios personalizados.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Funciones avanzadas requieren suscripción de pago.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Muy útil para la planificación y evaluación docente. Versión gratuita con funciones básicas.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · MagicSchool</span>
+          <a href="https://www.magicschool.ai" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="diffit">
+        <div class="ia-card-header">
+          <div class="ia-emoji educativa">📖</div>
+          <div class="ia-card-title">
+            <h3>Diffit</h3>
+            <div class="ia-developer">Diffit</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag educativa">Educativa</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Convierte textos complejos en materiales adaptados a distintos niveles de lectura y comprensión.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Principalmente en inglés, adaptación al español limitada.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Favorece la inclusión y atención a la diversidad. Especialmente útil en aulas heterogéneas.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Diffit</span>
+          <a href="https://diffit.me" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="eduaide">
+        <div class="ia-card-header">
+          <div class="ia-emoji educativa">📝</div>
+          <div class="ia-card-title">
+            <h3>Eduaide.ai</h3>
+            <div class="ia-developer">Eduaide</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag educativa">Educativa</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Genera recursos didácticos, actividades y evaluaciones alineadas con objetivos curriculares. Incluye biblioteca pedagógica.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Versión gratuita limitada en número de generaciones.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Ideal para planificación de clases y evaluación formativa.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Eduaide</span>
+          <a href="https://www.eduaide.ai" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="teachermatic">
+        <div class="ia-card-header">
+          <div class="ia-emoji educativa">🏫</div>
+          <div class="ia-card-title">
+            <h3>Teachermatic</h3>
+            <div class="ia-developer">Teachermatic (Europa)</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag educativa">Educativa</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Plataforma europea para crear fichas, rúbricas y feedback automatizado. Adaptada al marco educativo europeo.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Versión gratuita básica, funciones avanzadas de pago.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Relevante para formación del profesorado y gestión de aula.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Teachermatic</span>
+          <a href="https://teachermatic.com" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ IAs CREACIÓN VISUAL ══ -->
+  <section class="ia-section" id="visual">
+    <div class="ia-section-header visual">
+      <div class="ia-section-icon visual">🎨</div>
+      <div class="ia-section-info">
+        <h2>IAs de creación visual</h2>
+        <p>Herramientas para generar presentaciones, infografías, vídeos y recursos visuales con IA</p>
+      </div>
+    </div>
+    <div class="ia-grid">
+
+      <div class="ia-card" id="gamma">
+        <div class="ia-card-header">
+          <div class="ia-emoji visual">⚡</div>
+          <div class="ia-card-title">
+            <h3>Gamma.app</h3>
+            <div class="ia-developer">Gamma</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag visual">Creación visual</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Crea presentaciones, documentos o páginas web automáticamente a partir de un texto o tema.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Diseños poco personalizables en versión gratuita. Créditos limitados.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Elaborar presentaciones o materiales didácticos con rapidez. Ideal para defensa de TFM.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Gamma</span>
+          <a href="https://gamma.app" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="canva">
+        <div class="ia-card-header">
+          <div class="ia-emoji visual">🎨</div>
+          <div class="ia-card-title">
+            <h3>Canva Magic Studio</h3>
+            <div class="ia-developer">Canva</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag visual">Creación visual</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">IA generativa integrada en Canva. Crea diseños, infografías y recursos educativos a partir de descripciones breves.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Las funciones de IA avanzadas requieren Canva Pro.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Carteles, resúmenes, esquemas de conceptos geológicos, infografías y presentaciones.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Canva</span>
+          <a href="https://www.canva.com" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="tome">
+        <div class="ia-card-header">
+          <div class="ia-emoji visual">📖</div>
+          <div class="ia-card-title">
+            <h3>Tome.app</h3>
+            <div class="ia-developer">Tome</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag visual">Creación visual</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Herramienta de storytelling visual. Genera presentaciones narrativas con texto, imagen y estructura fluida.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Créditos limitados en versión gratuita. Menos flexible que Canva.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Explicar procesos o secuencias científicas como modelos geológicos o experimentos.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Tome</span>
+          <a href="https://tome.app" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+      <div class="ia-card" id="synthesia">
+        <div class="ia-card-header">
+          <div class="ia-emoji visual">🎬</div>
+          <div class="ia-card-title">
+            <h3>Synthesia / D-ID</h3>
+            <div class="ia-developer">Synthesia / D-ID</div>
+          </div>
+        </div>
+        <div class="ia-card-body">
+          <span class="ia-tag visual">Creación visual</span>
+          <div class="ia-row">
+            <div class="ia-row-label">✅ Fortalezas</div>
+            <p class="fortaleza">Generan vídeos con narración por voz o avatar digital a partir de texto. Sin cámara ni estudio.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">⚠️ Limitaciones</div>
+            <p class="limitacion">Coste elevado para uso intensivo. Vídeos cortos en versión gratuita.</p>
+          </div>
+          <div class="ia-row">
+            <div class="ia-row-label">📚 Aplicación docente</div>
+            <p>Crear vídeos explicativos o microlecciones para fomentar el aprendizaje autónomo.</p>
+          </div>
+        </div>
+        <div class="ia-card-footer">
+          <span class="ia-acceso">Freemium · Synthesia / D-ID</span>
+          <a href="https://www.synthesia.io" target="_blank" class="btn-ia">Acceder →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p><strong>BioGeo logIA</strong> · Repositorio de Recursos Educativos en Abierto para Biología y Geología en Educación Secundaria</p>
+  <p>Trabajo Fin de Máster · <strong>Magdalena Matito Silvero</strong> · Máster de Formación del Profesorado · Universidad Rey Juan Carlos · 2025–2026</p>
+  <p>Tutor académico: <strong>Pablo Melón Jiménez</strong> · URJC · Desarrollado con la asistencia de <a href="https://claude.ai" target="_blank">Claude (Anthropic)</a></p>
+  <p>Todos los recursos bajo licencia <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons</a> · Sitio alojado en <a href="https://pages.github.com" target="_blank">GitHub Pages</a></p>
+</footer>
+
+<script>
+  function toggleMenu(btn) {
+    btn.classList.toggle('open');
+    document.getElementById('nav-mobile').classList.toggle('open');
+  }
+</script>
+<script src="assets/js/chatbot.js"></script>
+
+</body>
+</html>
