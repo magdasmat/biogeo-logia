@@ -389,6 +389,48 @@
 
   .btn-ia:hover { background: #2E1B18; }
 
+  /* ── TABS ── */
+  .ia-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .ia-tab {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.55rem 1.2rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--surface);
+    color: var(--text-muted);
+  }
+
+  .ia-tab.general:hover,
+  .ia-tab.general.active {
+    background: var(--ia-general-light);
+    color: var(--ia-general);
+    border-color: var(--ia-general);
+  }
+
+  .ia-tab.educativa:hover,
+  .ia-tab.educativa.active {
+    background: var(--ia-edu-light);
+    color: var(--ia-edu);
+    border-color: var(--ia-edu);
+  }
+
+  .ia-tab.visual:hover,
+  .ia-tab.visual.active {
+    background: var(--ia-visual-light);
+    color: var(--ia-visual);
+    border-color: var(--ia-visual);
+  }
+
   /* ── FOOTER ── */
   footer {
     background: var(--geo);
@@ -444,6 +486,13 @@
 
   <div class="aviso">
     ⚠️ <strong>Nota de uso responsable:</strong> Estas herramientas no sustituyen la planificación didáctica ni la mediación pedagógica. Es esencial verificar la precisión de los contenidos generados, respetar la propiedad intelectual y reflexionar críticamente sobre el papel de la IA en los procesos de enseñanza-aprendizaje.
+  </div>
+
+  <!-- ══ TABS ══ -->
+  <div class="ia-tabs">
+    <button class="ia-tab general active" onclick="mostrarIA('general', this)">🤖 IAs generales</button>
+    <button class="ia-tab educativa" onclick="mostrarIA('educativa', this)">🎓 IAs educativas</button>
+    <button class="ia-tab visual" onclick="mostrarIA('visual', this)">🎨 IAs de creación visual</button>
   </div>
 
   <!-- ══ IAs GENERALES ══ -->
@@ -995,6 +1044,17 @@
     btn.classList.toggle('open');
     document.getElementById('nav-mobile').classList.toggle('open');
   }
+
+  const seccionMap = { general: 'generales', educativa: 'educativas', visual: 'visual' };
+
+  function mostrarIA(tipo, btn) {
+    document.querySelectorAll('.ia-section').forEach(s => s.style.display = 'none');
+    document.getElementById(seccionMap[tipo]).style.display = '';
+    document.querySelectorAll('.ia-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  mostrarIA('general', document.querySelector('.ia-tab.general'));
 </script>
 <script src="assets/js/chatbot.js"></script>
 
