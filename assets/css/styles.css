@@ -240,7 +240,9 @@ footer a { color: var(--accent); text-decoration: none; }
   font-weight: 400;
 }
 
-.filter-btn:hover, .filter-btn.active {
+.filter-btn:hover, .filter-btn.active,
+.filters .filter-btn:hover, .filters .filter-btn.active,
+.filter-bar .filter-btn:hover, .filter-bar .filter-btn.active {
   background: var(--geo);
   color: #FFF;
   border-color: var(--geo);
