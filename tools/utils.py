@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 utils.py · maintenance utilities for the BioGeo logIA repository
-
 Adds resources and AI tools to the site and updates everything that
 depends on them: cards, per-block counters, homepage stats and the
 search index.
@@ -69,6 +68,14 @@ THUMB_CLASS = {
 
 # ── helpers ───────────────────────────────────────────────────────
 
+def fix_text(s):
+    """Repara texto que llega de una consola sin UTF-8 (surrogates)."""
+    try:
+        return s.encode("utf-8", "surrogateescape").decode("utf-8")
+    except UnicodeDecodeError:
+        return s.encode("utf-8", "replace").decode("utf-8")
+
+
 def read(path):
     with open(path, encoding="utf-8") as f:
         return f.read()
@@ -76,7 +83,7 @@ def read(path):
 
 def write(path, text):
     with open(path, "w", encoding="utf-8") as f:
-        f.write(text)
+        f.write(fix_text(text))
 
 
 def slugify(s):
@@ -86,10 +93,10 @@ def slugify(s):
     return s
 
 
-def ask(label, default=None, required=True):
-    suffix = f" [{default}]" if default else ""
+def ask(label, default=None, required=True, show_default=True):
+    suffix = f" [{default}]" if default and show_default else ""
     while True:
-        val = input(f"{label}{suffix}: ").strip()
+        val = fix_text(input(f"{label}{suffix}: ")).strip()
         if not val and default is not None:
             return default
         if val or not required:
@@ -370,7 +377,7 @@ def confirm_and_write(pending):
     print("\nFiles to be modified:")
     for path in pending:
         print(f"  {os.path.relpath(path, ROOT)}")
-    answer = ask("\nDo you want to save changes? [Y/n]", "Y").lower()
+    answer = ask("\nDo you want to save changes? [Y/n]", "Y", show_default=False).lower()
     if answer.startswith("n"):
         print("Cancelled. No files were changed.")
         return False
@@ -424,21 +431,6 @@ def sync(verbose=True):
         index_html = re.sub(pattern, rf"\g<1>{counts[bid]}", index_html, flags=re.S)
     write(INDEX, index_html)
 
-    # ai.html tabs
-    ia_html = read(IA)
-    ia_counts = {}
-    for cat, (sec_id, label, _, _) in IA_CATEGORIES.items():
-        m = re.search(
-            r'<section class="ia-section" id="' + sec_id + r'"(.*?)</section>', ia_html, re.S
-        )
-        n = len(re.findall(r'<div class="ia-card"', m.group(1))) if m else 0
-        ia_counts[cat] = n
-        ia_html = re.sub(
-            r'(class="ia-tab ' + cat + r'[^"]*"[^>]*>)' + re.escape(label) + r"[^<]*",
-            rf"\g<1>{label} · {n} herramientas",
-            ia_html,
-        )
-    write(IA, ia_html)
 
     rebuild_search_index()
 
@@ -446,7 +438,6 @@ def sync(verbose=True):
         print(f"Total resources: {total}")
         for bid, title, _ in blocks:
             print(f"  {title}: {counts[bid]}")
-        print("AI tools:", ", ".join(f"{k} {v}" for k, v in ia_counts.items()))
         print(f"Search index rebuilt: {SEARCH_INDEX}")
 
 
@@ -685,7 +676,53 @@ def cmd_edit_ia(a):
         sync()
 
 
+def cmd_delete_resource(a):
+    html = read(RECURSOS)
+    resources = collect_resources(html)
+    if not resources:
+        sys.exit("No resources found in recursos.html")
+    cur = choose(resources, "Which resource do you want to delete?")
+    print(f"\nAbout to delete \"{cur['name']}\" (block: {cur['block']}).")
+
+    pending = {RECURSOS: html[: cur["start"]] + html[cur["end"] :]}
+
+    index_html = read(INDEX)
+    for cm in FEATURED_CARD_RE.finditer(index_html):
+        if f"<h4>{cur['name']}</h4>" in cm.group(0):
+            pending[INDEX] = index_html[: cm.start()] + index_html[cm.end() :]
+            print("Its featured card on the homepage will be removed too.")
+            break
+
+    if confirm_and_write(pending):
+        sync()
+
+
+def cmd_delete_ia(a):
+    html = read(IA)
+    ias = collect_ias(html)
+    if not ias:
+        sys.exit("No AI tools found in ia.html")
+    cur = choose(ias, "Which AI tool do you want to delete?")
+    print(f"\nAbout to delete \"{cur['name']}\" ({cur['category']}).")
+
+    pending = {IA: html[: cur["start"]] + html[cur["end"] :]}
+
+    index_html = read(INDEX)
+    mm = next((m for m in IA_MINI_RE.finditer(index_html) if m.group(1) == cur["slug"]), None)
+    if mm:
+        pending[INDEX] = index_html[: mm.start()] + index_html[mm.end() :]
+        print("Its homepage carousel card will be removed too.")
+
+    if confirm_and_write(pending):
+        sync()
+
+
 def main():
+    for stream in (sys.stdin, sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="surrogateescape")
+        except (AttributeError, ValueError):
+            pass
     p = argparse.ArgumentParser(
         description="BioGeo logIA maintenance utilities",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -695,6 +732,8 @@ def main():
     p.add_argument("--add-ia", action="store_true", help="add an AI tool")
     p.add_argument("--edit-resource", action="store_true", help="edit an existing resource")
     p.add_argument("--edit-ia", action="store_true", help="edit an existing AI tool")
+    p.add_argument("--delete-resource", action="store_true", help="delete a resource")
+    p.add_argument("--delete-ia", action="store_true", help="delete an AI tool")
     p.add_argument("--sync", action="store_true", help="recalculate counters and search index")
 
     p.add_argument("--name")
@@ -731,6 +770,10 @@ def main():
         cmd_edit_resource(a)
     elif a.edit_ia:
         cmd_edit_ia(a)
+    elif a.delete_resource:
+        cmd_delete_resource(a)
+    elif a.delete_ia:
+        cmd_delete_ia(a)
     elif a.sync:
         sync()
     else:
