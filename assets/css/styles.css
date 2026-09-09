@@ -1668,45 +1668,38 @@ footer a { color: var(--accent); text-decoration: none; }
 .btn-ia:hover { background: #2E1B18; }
 
 .ia-tabs {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  position: sticky;
+  top: 64px;
+  z-index: 90;
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 2.5rem;
-  flex-wrap: wrap;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .ia-tab {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
+  padding: 1rem 1.5rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  padding: 0.55rem 1.2rem;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: var(--surface);
   color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 
-.ia-tab.general:hover,
-.ia-tab.general.active {
-  background: var(--ia-general-light);
-  color: var(--ia-general);
-  border-color: var(--ia-general);
-}
-
-.ia-tab.educativa:hover,
-.ia-tab.educativa.active {
-  background: var(--ia-edu-light);
-  color: var(--ia-edu);
-  border-color: var(--ia-edu);
-}
-
-.ia-tab.visual:hover,
-.ia-tab.visual.active {
-  background: var(--ia-visual-light);
-  color: var(--ia-visual);
-  border-color: var(--ia-visual);
-}
+.ia-tab:hover { color: var(--text); }
+.ia-tab.general.active   { color: var(--ia-general); border-bottom-color: var(--ia-general); }
+.ia-tab.educativa.active { color: var(--ia-edu); border-bottom-color: var(--ia-edu); }
+.ia-tab.visual.active    { color: var(--ia-visual); border-bottom-color: var(--ia-visual); }
 
 /* Buscador con sugerencias */
 

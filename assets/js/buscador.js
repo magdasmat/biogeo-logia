@@ -32,7 +32,7 @@
   function buscarSugerencias(q) {
     const out = [];
     bloques.forEach(b => {
-      const nombre = norm(b.t.replace(/^Bloque \d+\s*[—·-]\s*/, ''));
+      const nombre = norm(b.t.replace(/^Bloque \d+\s*[.—·-]\s*/, ''));
       if (nombre.includes(q) || norm(b.t).includes(q)) {
         out.push({ kind: 'bloque', label: b.t, meta: b.c + ' recursos', href: 'recursos.html#' + b.id, rank: nombre.startsWith(q) ? -0.5 : 0.5 });
       }
