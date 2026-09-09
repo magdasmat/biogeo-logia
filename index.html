@@ -53,8 +53,13 @@
     <div class="hero-search">
       <input type="text" id="buscador" placeholder="Buscar por tema, nivel o tipo de recurso..." aria-label="Buscar recursos">
       <button onclick="buscar()">Buscar</button>
+      <div class="search-suggest" id="search-suggest" role="listbox" aria-label="Sugerencias"></div>
     </div>
   </div>
+  <a href="#gallotia" class="hero-gallotia" aria-label="Conoce más sobre la especie">
+    <span class="hero-gallotia-tip">Conoce más sobre la especie</span>
+    <img src="assets/img/gallotia.png" alt="">
+  </a>
 </section>
 
 <!-- ══ ESTADÍSTICAS ══ -->
@@ -317,6 +322,20 @@
     </div>
   </div>
 </section>
+<section class="gallotia" id="gallotia">
+  <div class="gallotia-inner">
+    <figure class="gallotia-fig">
+      <img src="assets/img/gallotia-gallotia.png" alt="Ilustración de un lagarto moteado, gallotia del repositorio">
+      <figcaption>Ilustración de la gallotia, inspirada en el lagarto canario moteado.</figcaption>
+    </figure>
+    <div>
+      <h2>Lagarto canario moteado</h2>
+      <div class="gallotia-sub"><i>Gallotia intermedia</i> · Hernández, Nogales &amp; Martín, 2000</div>
+      <p class="texto">El lagarto canario moteado es un endemismo exclusivo de Tenerife: descrito como especie en el año 2000, tras su redescubrimiento en 1996, hoy sobrevive en dos núcleos aislados, el macizo de Teno al noroeste y la Mesa de Guaza al sur, en acantilados de gran desarrollo vertical que no eran su hábitat original, ya que en el pasado ocupó buena parte de la isla. La UICN lo clasifica en peligro crítico y el Catálogo Nacional de Especies Amenazadas lo recoge en peligro de extinción, con los depredadores introducidos, sobre todo los gatos asilvestrados, como principal amenaza. Es la gallotia de este repositorio porque resume lo que queremos llevar al aula: un endemismo cercano con el que hablar de biodiversidad, especies invasoras y conservación.</p>
+      <p class="gallotia-fuentes">Fuentes: <a href="https://www.miteco.gob.es/content/dam/miteco/es/biodiversidad/temas/inventarios-nacionales/reptil_26_tcm30-98931.pdf" target="_blank" rel="noopener">ficha del Inventario Nacional de Biodiversidad (MITECO)</a> · <a href="https://www.biodiversidadcanarias.es/biota/especie/V00111" target="_blank" rel="noopener">Banco de Datos de Biodiversidad de Canarias</a> · <a href="https://www.agenciasinc.es/Reportajes/El-incierto-destino-del-lagarto-moteado-de-Tenerife" target="_blank" rel="noopener">Agencia SINC</a></p>
+    </div>
+  </div>
+</section>
 <!-- ══ PIE DE PÁGINA ══ -->
 <footer>
   <p><strong>BioGeo logIA</strong> · Repositorio de Recursos Educativos en Abierto para Biología y Geología en Educación Secundaria</p>
@@ -327,5 +346,7 @@
 
 <script src="assets/js/main.js"></script>
 <script src="assets/js/chatbot.js"></script>
+<script src="assets/js/search-index.js"></script>
+<script src="assets/js/buscador.js"></script>
 </body>
 </html>

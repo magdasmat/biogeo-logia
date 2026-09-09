@@ -1707,3 +1707,295 @@ footer a { color: var(--accent); text-decoration: none; }
   color: var(--ia-visual);
   border-color: var(--ia-visual);
 }
+
+/* Buscador con sugerencias */
+
+/* el hero recorta por defecto (overflow:hidden): hay que dejar salir el desplegable */
+.hero { overflow: visible; }
+
+.hero-search { position: relative; overflow: visible; }
+
+.search-suggest {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0; right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 18px 40px -12px rgba(0,0,0,0.45);
+  overflow: hidden;
+  z-index: 60;
+  text-align: left;
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.search-suggest.open { display: block; }
+
+.ss-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.7rem 0.9rem;
+  text-decoration: none;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+.ss-item:last-child { border-bottom: none; }
+.ss-item.active { background: var(--bio-light); }
+
+.ss-kind {
+  flex-shrink: 0;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 5px;
+  margin-top: 2px;
+}
+
+.ss-kind.recurso { background: var(--bio-light); color: var(--bio); }
+.ss-kind.bloque  { background: var(--geo-light); color: var(--geo); }
+
+.ss-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+.ss-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.ss-title mark { background: none; color: var(--accent); font-weight: 500; }
+
+.ss-meta {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.ss-empty {
+  padding: 0.9rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+/* tarjeta resaltada al llegar desde el buscador */
+.resource-card--destacado {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(255,143,0,0.18);
+}
+
+.search-aviso {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-left: auto;
+  font-weight: 400;
+}
+
+.search-aviso a { color: var(--bio); text-decoration: underline; }
+
+.hero-search input { border-radius: 9px 0 0 9px; }
+.hero-search button { border-radius: 0 9px 9px 0; }
+
+.hero {
+  background: url('../img/hero-piel.jpg') center / cover no-repeat,
+              linear-gradient(135deg, var(--geo) 0%, #2E1B18 50%, #1B2E1B 100%);
+}
+.hero::before { display: none; }
+
+.gallotia {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 2rem;
+}
+
+.gallotia-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.gallotia-fig { margin: 0; }
+
+.gallotia-fig img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallotia-fig figcaption {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
+
+.gallotia-eyebrow {
+  display: inline-block;
+  background: var(--bio-light);
+  color: var(--bio);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.7rem;
+  border-radius: 100px;
+  margin-bottom: 0.9rem;
+}
+
+.gallotia h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.15rem;
+}
+
+.gallotia h2 i { font-style: italic; color: var(--bio); }
+
+.gallotia-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
+}
+
+.gallotia p.texto {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--text);
+  font-weight: 400;
+  max-width: 62ch;
+}
+
+.gallotia-datos {
+  display: flex;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+  margin-top: 1.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+}
+
+.gallotia-dato { display: flex; flex-direction: column; gap: 2px; }
+
+.gallotia-dato span {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.gallotia-dato b {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.gallotia-dato b.critico { color: #B71C1C; }
+
+.gallotia-fuentes {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 1.1rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.gallotia-fuentes a { color: var(--bio); text-decoration: none; }
+.gallotia-fuentes a:hover { text-decoration: underline; }
+
+@media (max-width: 720px) {
+  .gallotia-inner { grid-template-columns: 1fr; gap: 1.6rem; }
+  .gallotia-fig { max-width: 280px; }
+}
+
+/* ── botón gallotia en la esquina inferior derecha del hero ── */
+
+.hero-gallotia {
+  position: absolute;
+  right: 1.6rem;
+  bottom: 0;
+  z-index: 3;
+  display: block;
+  line-height: 0;
+  transition: transform 0.25s ease;
+}
+
+.hero-gallotia img {
+  width: 170px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.45));
+}
+
+.hero-gallotia:hover { transform: translateY(-6px); }
+
+.hero-gallotia-tip {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 6px);
+  background: var(--surface);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  white-space: nowrap;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px -6px rgba(0,0,0,0.5);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.hero-gallotia-tip::after {
+  content: '';
+  position: absolute;
+  right: 22px;
+  top: 100%;
+  border: 6px solid transparent;
+  border-top-color: var(--surface);
+}
+
+.hero-gallotia:hover .hero-gallotia-tip,
+.hero-gallotia:focus-visible .hero-gallotia-tip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .hero-gallotia img { width: 120px; }
+}
+
+@media (max-width: 640px) {
+  .hero-gallotia { display: none; }
+}
+
+/* mención breve en el pie */
+.footer-gallotia {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.footer-gallotia img { height: 26px; width: auto; opacity: 0.85; }
+
+html { scroll-behavior: smooth; }
