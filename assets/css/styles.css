@@ -62,12 +62,31 @@ header {
   color: #FFF;
   letter-spacing: -0.03em;
   display: flex;
-  align-items: baseline;
-  gap: 2px;
+  align-items: center;
   text-decoration: none;
 }
 
-.logo span { color: var(--accent); font-style: italic; }
+.logo-wm {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  line-height: 1;
+  transform: translateY(1px);
+}
+
+.logo-wm > span { color: var(--accent); font-style: italic; }
+
+.logo-img {
+  height: 44px;
+  width: auto;
+  display: block;
+  align-self: center;
+  margin-right: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .logo-img { height: 36px; }
+}
 
 .logo-sub {
   font-family: 'DM Sans', sans-serif;
